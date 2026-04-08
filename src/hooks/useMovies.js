@@ -17,6 +17,9 @@ export const useMovies = (query) => {
     const controller = new AbortController();
     const signal = controller.signal;
 
+    //flag to check is the current effect active
+    let ignore = false;
+
     const getMovies = async () => {
       try {
         //clean previous states before new fetch
@@ -26,29 +29,39 @@ export const useMovies = (query) => {
 
         const moviesResult = await searchMovies(debouncedQuery, signal);
 
-        setMovies(moviesResult);
+        if (!ignore) {
+          setMovies(moviesResult);
+        }
       } catch (err) {
-        setMovies([]);
-        setIsError(true);
-        setErrorMessage(err.message || "Something went wrong");
-        return;
+        if (err.name === "AbortError") return;
+
+        //change states only if the current effect is active
+        if (!ignore) {
+          setMovies([]);
+          setIsError(true);
+          setErrorMessage(err.message || "Something went wrong");
+          return;
+        }
       } finally {
-        setIsLoading(false);
+        if (!ignore) setIsLoading(false);
       }
     };
 
     if (!debouncedQuery.trim()) {
-      //prevent fetch on empty input and clear movies
-      //no need to reset errors and loading state here
-      //because status will return idle
+      //prevent fetch on empty input and clear error and movies
       setMovies([]);
+      setIsError(false);
+      setErrorMessage("");
       return;
     }
 
     getMovies();
 
     //abort prev. request on re-run effect
-    return () => controller.abort();
+    return () => {
+      ignore = true;
+      controller.abort();
+    };
   }, [debouncedQuery]);
 
   let status;
