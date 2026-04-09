@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="container px-4 py-2">
+      <div className="mx-auto px-4 py-2 h-max">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movie/:movieId" element={<MovieDetailsPage />} />

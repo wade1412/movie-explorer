@@ -34,14 +34,14 @@ function MovieList({ movies, status, errorMessage }) {
 
   if (status === "success")
     return (
-      <div className="movie-list-grid">
+      <div className="movie-list-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {movies.map((movie) => (
           <MovieCard
             key={movie.id}
             id={movie.id}
             title={movie.title}
             rating={movie.vote_average}
-            overview={movie.overview}
+            posterPath={movie.poster_path}
           />
         ))}
       </div>

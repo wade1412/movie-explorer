@@ -12,11 +12,10 @@ function HomePage() {
   };
 
   return (
-    <>
-      <h1>Home Page</h1>
+    <section className="home-page-section flex flex-col gap-6 py-4 px-4 max-w-6xl mx-auto">
       <SearchInput searchQuery={searchQuery} onChange={handleQueryChange} />
       <MovieList movies={movies} status={status} errorMessage={errorMessage} />
-    </>
+    </section>
   );
 }
 
