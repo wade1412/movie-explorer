@@ -1,32 +1,38 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import Skeleton from "./Skeleton";
+import Fallback from "./Fallback";
 
 function MovieCard({ title, rating, id, posterPath }) {
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
   return (
-    <Link to={`/movie/${id}`} className="block">
-      <div className="movie-card bg-dark-blue-400 flex flex-col h-full justify-center items-center overflow-hidden rounded-lg py-2 text-center shadow-lg">
-        <div className="poster-container flex aspect-4/5 items-center justify-center overflow-hidden rounded-lg p-3">
-          {posterPath === null ? (
-            <div className="bg-dark-blue-200 flex h-full w-full items-center justify-center rounded-lg">
-              <h2 className="text-mute mx-auto w-4/5 text-center text-lg font-light">
-                {" "}
-                No Image
-              </h2>
-            </div>
+    <Link to={`/movie/${id}`} className="block h-full">
+      <div className="movie-card bg-dark-blue-400  grid h-full overflow-hidden rounded-lg text-center shadow-lg">
+        <div className="poster-container relative aspect-4/5 overflow-hidden rounded-lg p-5">
+          {posterPath ? (
+            <>
+              {isImageLoading && <Skeleton />}
+
+              <img
+                onLoad={() => setIsImageLoading(false)}
+                src={`https://image.tmdb.org/t/p/w300${posterPath}`}
+                loading="lazy"
+                className={`movie-poster h-full w-full rounded-lg object-cover shadow-lg transition-opacity duration-300 
+                  ${isImageLoading ? "opacity-0" : "opacity-100"}`}
+              />
+            </>
           ) : (
-            <img
-              src={`https://image.tmdb.org/t/p/w300${posterPath}`}
-              loading="lazy"
-              className="movie-poster block h-full w-full rounded-lg object-cover shadow-lg"
-            ></img>
+            <Fallback />
           )}
         </div>
 
-        <div className="px-6 py-4 flex flex-col items-center justify-center w-full">
-          <p className="movie-title mb-2 text-lg font-semibold line-clamp-2">
+        <div className="flex w-full flex-col items-center justify-center gap-2 px-6 py-2 pb-4">
+          <p className="movie-title mb-2 line-clamp-2  text-lg font-semibold">
             {title}
           </p>
-          <p className="text-sm font-semibold rounded-xl p-2 bg-dark-blue-600 w-1/2">
-            {rating === 0 ? "Movie not rated" : ` ⭐ ${rating}`}
+          <p className="bg-dark-blue-600 rounded-xl p-2 px-4 text-sm font-semibold">
+            {rating === 0 ? "Movie not rated" : ` ⭐ ${rating} / 10`}
           </p>
         </div>
       </div>
