@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import Skeleton from "./Skeleton";
+import Skeleton from "./SkeletonOverlay";
 import Fallback from "./Fallback";
 
 function MovieCard({ title, rating, id, posterPath }) {
@@ -8,7 +8,7 @@ function MovieCard({ title, rating, id, posterPath }) {
 
   return (
     <Link to={`/movie/${id}`} className="block h-full">
-      <div className="movie-card bg-dark-blue-400  grid h-full overflow-hidden rounded-lg text-center shadow-lg">
+      <div className="movie-card bg-dark-blue-400 grid h-full overflow-hidden rounded-lg text-center shadow-lg">
         <div className="poster-container relative aspect-4/5 overflow-hidden rounded-lg p-5">
           {posterPath ? (
             <>
@@ -18,8 +18,7 @@ function MovieCard({ title, rating, id, posterPath }) {
                 onLoad={() => setIsImageLoading(false)}
                 src={`https://image.tmdb.org/t/p/w300${posterPath}`}
                 loading="lazy"
-                className={`movie-poster h-full w-full rounded-lg object-cover shadow-lg transition-opacity duration-300 
-                  ${isImageLoading ? "opacity-0" : "opacity-100"}`}
+                className={`movie-poster h-full w-full rounded-lg object-cover shadow-lg transition-opacity duration-300 ${isImageLoading ? "opacity-0" : "opacity-100"}`}
               />
             </>
           ) : (
@@ -28,7 +27,7 @@ function MovieCard({ title, rating, id, posterPath }) {
         </div>
 
         <div className="flex w-full flex-col items-center justify-center gap-2 px-6 py-2 pb-4">
-          <p className="movie-title mb-2 line-clamp-2  text-lg font-semibold">
+          <p className="movie-title mb-2 line-clamp-2 text-lg font-semibold">
             {title}
           </p>
           <p className="bg-dark-blue-600 rounded-xl p-2 px-4 text-sm font-semibold">

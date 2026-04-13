@@ -12,6 +12,10 @@
   --color-mute: #e0e0e0;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 .nav-item {
   font-weight: 500;
   transform: translateY(0px) scale(1);

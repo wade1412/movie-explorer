@@ -21,7 +21,7 @@ function SearchInput({ searchQuery, onChange }) {
           </svg>
         </div>
         <input
-          className="search-input bg-dark-blue-600 focus:ring-dark-blue-100 block w-full rounded-xl p-3 ps-10 text-base shadow-xs transition-shadow duration-300 focus:ring-1 focus:outline-none"
+          className="search-input bg-dark-blue-600 focus:ring-dark-blue-100 block w-full rounded-xl p-3 ps-10 text-base shadow-xs transition-shadow duration-300 focus:ring-1 focus:outline-none focus:shadow-lg focus:shadow-dark-blue-200"
           type="text"
           id="search"
           placeholder="Search for a movie..."
