@@ -27,7 +27,7 @@ export const useMovies = (query) => {
         setErrorMessage("");
         setIsLoading(true);
 
-        const moviesResult = await searchMovies(debouncedQuery, signal);
+        const moviesResult = await searchMovies(debouncedQuery.trim(), signal);
 
         if (!ignore) {
           setMovies(moviesResult);
