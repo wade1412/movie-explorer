@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDebounce } from "./useDebounce";
-import { searchMovies } from "../services/api";
 
-export const useMovies = (query) => {
+export const useMovies = (query, fetchFunction) => {
   //states for search result, error/loading status
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -11,6 +10,24 @@ export const useMovies = (query) => {
 
   //debounced search
   const debouncedQuery = useDebounce(query);
+
+  //check if the user already started typing in input to prevent false empty state
+  useEffect(() => {
+    if (!query.trim()) {
+      //return early on empty query
+      setIsLoading(false);
+      setMovies([]);
+      return;
+    }
+
+    const isWaitingForDebounce = query.trim() !== debouncedQuery.trim();
+
+    if (isWaitingForDebounce) {
+      //start loading once the debounced value and real value dont match
+      setIsLoading(true);
+      setMovies([]);
+    }
+  }, [query, debouncedQuery]);
 
   useEffect(() => {
     //abort contoller for race condition control
@@ -27,10 +44,10 @@ export const useMovies = (query) => {
         setErrorMessage("");
         setIsLoading(true);
 
-        const moviesResult = await searchMovies(debouncedQuery.trim(), signal);
+        const moviesResult = await fetchFunction(debouncedQuery.trim(), signal);
 
         if (!ignore) {
-          setMovies(moviesResult);
+          setMovies(moviesResult || []);
         }
       } catch (err) {
         if (err.name === "AbortError") return;
@@ -57,15 +74,15 @@ export const useMovies = (query) => {
 
     getMovies();
 
-    //abort prev. request on re-run effect
+    //abort previous request on re-run effect
     return () => {
       ignore = true;
       controller.abort();
     };
-  }, [debouncedQuery]);
+  }, [debouncedQuery, fetchFunction]);
 
   let status;
-  if (!debouncedQuery.trim()) status = "idle";
+  if (!query.trim()) status = "idle";
   else if (isLoading) status = "loading";
   else if (isError) status = "error";
   else if (movies.length === 0) status = "empty";

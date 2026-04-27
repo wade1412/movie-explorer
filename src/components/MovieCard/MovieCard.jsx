@@ -1,25 +1,27 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import Skeleton from "./SkeletonOverlay";
-import Fallback from "./Fallback";
+import Skeleton from "../SkeletonOverlay";
+import Fallback from "../Fallback";
 import { motion } from "motion/react";
+import "./movieCard.css";
 
-function MovieCard({ title, rating, id, posterPath }) {
+function MovieCard({ style, title, rating, id, posterPath }) {
   const [isImageLoading, setIsImageLoading] = useState(true);
 
   return (
     <Link to={`/movie/${id}`} className="block h-full">
       <motion.div
-        className="movie-card bg-dark-blue-400 grid h-full overflow-hidden rounded-lg text-center shadow-lg"
+        className={`${style}`}
         whileHover={{
           y: -5,
-          scale: 1.02,
+          scale: 1.05,
+          backgroundColor: "#56647b",
         }}
         whileTap={{
           scale: 0.97,
         }}
       >
-        <div className="poster-container relative aspect-4/5 overflow-hidden rounded-lg p-5">
+        <div className="poster-container p-2 lg:p-4">
           {posterPath ? (
             <>
               {isImageLoading && <Skeleton />}
@@ -32,7 +34,7 @@ function MovieCard({ title, rating, id, posterPath }) {
                 src={`https://image.tmdb.org/t/p/w300${posterPath}`}
                 alt={title}
                 loading="lazy"
-                className={`movie-poster h-full w-full rounded-lg object-cover shadow-lg transition-opacity duration-300 ${isImageLoading ? "opacity-0" : "opacity-100"}`}
+                className={`movie-poster h-full w-full rounded-lg object-cover shadow-lg block transition-opacity duration-300 ${isImageLoading ? "opacity-0" : "opacity-100"}`}
               />
             </>
           ) : (
@@ -40,11 +42,9 @@ function MovieCard({ title, rating, id, posterPath }) {
           )}
         </div>
 
-        <div className="flex w-full flex-col items-center justify-center gap-2 px-6 py-2 pb-4">
-          <p className="movie-title mb-2 line-clamp-2 text-lg font-semibold">
-            {title}
-          </p>
-          <p className="bg-dark-blue-600 rounded-xl p-2 px-4 text-sm font-semibold">
+        <div className="movie-info flex flex-1 flex-col items-center justify-center gap-2 p-2">
+          <p className="movie-title line-clamp-2  font-semibold">{title}</p>
+          <p className=" movie-rating bg-dark-blue-600 rounded-xl p-2 px-4 text-md font-semibold">
             {rating === 0 ? "Movie not rated" : ` ⭐ ${rating.toFixed(1)} / 10`}
           </p>
         </div>

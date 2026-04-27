@@ -4,7 +4,7 @@ function SkeletonGrid() {
   return (
     <>
       {Array.from({ length: 9 }).map((_, index) => (
-        <SkeletonCard key={index} />
+        <SkeletonCard key={index} isRating={true} />
       ))}
     </>
   );

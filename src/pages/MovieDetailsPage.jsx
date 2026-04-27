@@ -45,7 +45,7 @@ function MovieDetailsPage() {
 
   if (status === "success") {
     return (
-      <section className="movie-details-section max-w-5xl p-6">
+      <section className="movie-details-section max-w-5xl p-6 mx-auto">
         <div className="grid-movie-wrapper grid justify-center gap-6 md:grid-cols-2">
           <div className="img-wrapper bg-dark-blue-200 flex items-center overflow-hidden rounded-2xl shadow-2xl">
             {movie.poster_path === null ? (

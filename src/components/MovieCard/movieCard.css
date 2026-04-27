@@ -1,0 +1,53 @@
+.movie-search-card {
+  display: grid;
+  background-color: var(--color-dark-blue-400);
+  height: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  text-align: center;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  place-items: center;
+}
+
+.movie-trending-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-dark-blue-400);
+  padding: calc(var(--spacing) * 2);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  text-align: center;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.poster-container {
+  overflow: hidden;
+  aspect-ratio: 2/3;
+  border-radius: 0.5rem;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+}
+
+.movie-search-card .movie-info {
+  padding-inline: calc(var(--spacing) * 6);
+  padding-top: calc(var(--spacing) * 4);
+  padding-bottom: calc(var(--spacing) * 6);
+}
+
+.movie-search-card .movie-title {
+  font-size: 1.25rem;
+}
+
+.movie-trending-card .movie-title {
+  font-size: 1.125rem;
+}
+
+.movie-trending-card .movie-rating {
+  display: none;
+}

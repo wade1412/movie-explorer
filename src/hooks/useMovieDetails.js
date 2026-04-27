@@ -29,9 +29,7 @@ export const useMovieDetails = (id) => {
         }
       } catch (err) {
         //handle abortError
-        if (err.name === "AbortError") {
-          return;
-        }
+        if (err.name === "AbortError") return;
 
         //change states only if the current effect is active
         if (!ignore) {
