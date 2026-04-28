@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTrendingMovies } from "../services/api";
 
-export const useTrending = () => {
+export const useMoviesSlider = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);

@@ -1,15 +1,22 @@
-import { useTrending } from "../hooks/useTrending";
+import { useMoviesSlider } from "../../hooks/useMoviesSlider";
 import MovieCarousel from "./MovieCarousel";
-import SkeletonTrending from "./SkeletonTrending";
+// eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
+import SkeletonTrending from "./SkeletonTrending";
 
 function Trending() {
-  const { movies, status, errorMessage } = useTrending();
+  const { movies, status, errorMessage } = useMoviesSlider();
 
   return (
     <>
-      <div className="w-full p-2">
-        <h2 className="text-2xl font-semibold mb-2">Trending movies 🔥</h2>
+      <div
+        className="w-full px-4 bg-dark-blue-900 rounded-lg
+      "
+      >
+        <h2 className="rounded-lg flex w-fit p-4 text-2xl font-semibold mt-2 mb-2 ">
+          Trending movies 🔥
+        </h2>
+
         <AnimatePresence mode="wait">
           {status === "loading" && (
             <motion.div

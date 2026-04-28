@@ -1,19 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-blue-800: #1a1f2b;
+  /* Main dark palette */
+  --color-dark-blue-950: #0f1219; /* Bg*/
+  --color-dark-blue-900: #1a1f2b; /* Cards */
+  --color-dark-blue-800: #242a38;
   --color-dark-blue-700: #292e3b;
-  --color-dark-blue-600: #414654;
-  --color-dark-blue-400: #2c3a4f;
-  --color-dark-blue-200: #56647b;
-  --color-dark-blue-100: #b4c2dc;
-  --color-blush: #ff4d4d;
-  --color-light-blush: #ffecda;
-  --color-mute: #e0e0e0;
+  --color-dark-blue-600: #3e4556;
+  --color-dark-blue-400: #56647b;
+  --color-dark-blue-200: #a1adbd;
+  --color-dark-blue-100: #d1d9e6;
+
+  /* Accents */
+  --color-blush: #ff5c5c;
+  --color-blush-hover: #ff4d4d;
+  --color-light-blush: #fde2e2;
+
+  /* Additional */
+  --color-mute: #333b4a; /* For borders */
+  --color-surface: rgba(255, 255, 255, 0.05);
 }
 
 html {
   scrollbar-gutter: auto;
+  background-color: var(--color-dark-blue-950);
 }
 
 .movie-details-poster {

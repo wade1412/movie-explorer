@@ -4,7 +4,7 @@ function SearchInput({ searchQuery, onChange }) {
       <div className="relative w-full max-w-120">
         <div className="pointer-events-none absolute inset-y-0 inset-s-0 flex items-center ps-3">
           <svg
-            className="text-base h-4 w-4"
+            className="text-xl h-5 w-5"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -21,7 +21,7 @@ function SearchInput({ searchQuery, onChange }) {
           </svg>
         </div>
         <input
-          className="search-input bg-dark-blue-600 focus:ring-dark-blue-100 block w-full rounded-xl p-3 ps-10 text-base shadow-xs transition-shadow duration-300 focus:ring-1 focus:outline-none focus:shadow-lg focus:shadow-dark-blue-200"
+          className="search-input bg-dark-blue-600  text-xl not-only:focus:ring-dark-blue-100 block w-full rounded-xl p-3 ps-12 shadow-xs transition-shadow duration-300 focus:ring-1 focus:outline-none focus:shadow-lg focus:shadow-dark-blue-200"
           type="text"
           id="search"
           placeholder="Search for a movie..."

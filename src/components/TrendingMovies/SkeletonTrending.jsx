@@ -1,4 +1,4 @@
-import SkeletonCard from "./moviesSearch/SkeletonCard";
+import SkeletonCard from "../Skeletons/SkeletonCard";
 
 function SkeletonTrending() {
   return (

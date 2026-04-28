@@ -19,9 +19,9 @@ export const getTrendingMovies = async () => {
   return data.results || [];
 };
 
-export const searchMovies = async (query, signal) => {
+export const searchMovies = async (params, signal) => {
   const res = await fetch(
-    `https://api.themoviedb.org/3/search/movie?query=${query}`,
+    `https://api.themoviedb.org/3/search/movie?${params}`,
     {
       headers: {
         Authorization: `Bearer ${BEARER_TOKEN}`,
@@ -36,7 +36,7 @@ export const searchMovies = async (query, signal) => {
     throw new Error(data.message || data.status_message || "Search HTTP error");
   }
 
-  return data.results || [];
+  return data;
 };
 
 export const getMovieById = async (id, signal) => {

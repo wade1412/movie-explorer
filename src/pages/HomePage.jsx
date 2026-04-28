@@ -1,28 +1,17 @@
-import { useState } from "react";
-import SearchInput from "../components/moviesSearch/SearchInput";
-import MovieList from "../components/moviesSearch/MovieList";
-import { useMovies } from "../hooks/useMovies";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
-import { searchMovies } from "../services/api";
-import Trending from "../components/Trending";
+import Trending from "../components/TrendingMovies/Trending";
+import MoviesSearch from "../components/MoviesSearch/MoviesSearch";
 
 function HomePage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const { movies, status, errorMessage } = useMovies(searchQuery, searchMovies);
-
-  const handleQueryChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
   return (
     <motion.section
-      className="home-page-section flex flex-col gap-6 py-8 px-4 max-w-[70vw] mx-auto"
+      className=" flex flex-col gap-6 py-2 mx-auto"
       initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
     >
       <Trending />
-      <SearchInput searchQuery={searchQuery} onChange={handleQueryChange} />
-      <MovieList movies={movies} status={status} errorMessage={errorMessage} />
+      <MoviesSearch />
     </motion.section>
   );
 }

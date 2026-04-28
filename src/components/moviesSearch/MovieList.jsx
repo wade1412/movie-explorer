@@ -1,6 +1,8 @@
+// eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
 import MovieCard from "../MovieCard/MovieCard";
 import SkeletonGrid from "./SkeletonGrid";
+import ListControls from "./ListControls";
 
 const gridVariants = {
   hidden: { opacity: 0 },
@@ -32,10 +34,16 @@ const gridClass =
 const headingClass =
   "text-3xl font-bold mx-auto text-center p-5 mt-10 rounded-xl bg-dark-blue-200 max-w-1/2";
 
-function MovieList({ movies, status, errorMessage }) {
+function MovieList({
+  movies,
+  page,
+  totalPages,
+  changePageNumber,
+  status,
+  errorMessage,
+}) {
   return (
-    <AnimatePresence>
-      {status === "idle" && null}
+    <AnimatePresence mode="wait">
       {status === "error" && (
         <motion.div
           key="error"
@@ -79,26 +87,33 @@ function MovieList({ movies, status, errorMessage }) {
       )}
 
       {status === "success" && (
-        <motion.ul
-          className={`movie-list-grid ${gridClass} `}
-          key="success"
+        <motion.div
+          key={`page-${page}`}
           variants={gridVariants}
           initial="hidden"
           animate="visible"
           exit="exit"
         >
-          {movies.map((movie) => (
-            <motion.li key={movie.id} variants={cardVariants}>
-              <MovieCard
-                style="movie-search-card"
-                id={movie.id}
-                title={movie.title}
-                rating={movie.vote_average}
-                posterPath={movie.poster_path}
-              />
-            </motion.li>
-          ))}
-        </motion.ul>
+          <ul className={`movie-list-grid ${gridClass} `}>
+            {movies.map((movie) => (
+              <motion.li key={movie.id} variants={cardVariants}>
+                <MovieCard
+                  style="movie-search-card"
+                  id={movie.id}
+                  title={movie.title}
+                  rating={movie.vote_average}
+                  posterPath={movie.poster_path}
+                />
+              </motion.li>
+            ))}
+          </ul>
+
+          <ListControls
+            page={page}
+            totalPages={totalPages}
+            changePageNumber={changePageNumber}
+          />
+        </motion.div>
       )}
     </AnimatePresence>
   );
