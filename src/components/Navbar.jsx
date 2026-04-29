@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 import { Link } from "react-router";
 
@@ -47,8 +48,8 @@ function Navbar() {
         className="nav-item"
         whileHover={{ y: -3 }}
       >
-        <Link to="/random" className="font-semibold ">
-          Random
+        <Link to="/discover" className="font-semibold ">
+          Discover
         </Link>
       </motion.li>
     </motion.ul>

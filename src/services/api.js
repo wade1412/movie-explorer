@@ -2,7 +2,7 @@ const BEARER_TOKEN = import.meta.env.VITE_API_BEARER_TOKEN;
 
 export const getTrendingMovies = async () => {
   const res = await fetch(
-    "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
+    "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&page=1&sort_by=popularity.desc",
     {
       headers: {
         Authorization: `Bearer ${BEARER_TOKEN}`,
@@ -19,9 +19,9 @@ export const getTrendingMovies = async () => {
   return data.results || [];
 };
 
-export const searchMovies = async (params, signal) => {
+const getMoviesByParams = async (apiType, params, signal) => {
   const res = await fetch(
-    `https://api.themoviedb.org/3/search/movie?${params}`,
+    `https://api.themoviedb.org/3/${apiType}/movie?${params}`,
     {
       headers: {
         Authorization: `Bearer ${BEARER_TOKEN}`,
@@ -38,6 +38,12 @@ export const searchMovies = async (params, signal) => {
 
   return data;
 };
+
+export const searchMovies = (params, signal) =>
+  getMoviesByParams("search", params, signal);
+
+export const getFilteredMovies = (params, signal) =>
+  getMoviesByParams("discover", params, signal);
 
 export const getMovieById = async (id, signal) => {
   const res = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {

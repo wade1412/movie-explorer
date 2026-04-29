@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
 import RandomMoviePage from "./pages/RandomMoviePage";
+import DiscoverMoviePage from "./pages/DiscoverMoviePage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/movie/:movieId" element={<MovieDetailsPage />} />
           <Route path="/random" element={<RandomMoviePage />} />
+          <Route path="/discover" element={<DiscoverMoviePage />} />
         </Routes>
       </div>
     </>

@@ -1,13 +1,14 @@
 import { useMoviesSearch } from "../../hooks/useMoviesSearch";
+import MovieList from "../MoviesList/MovieList";
 import SearchInput from "./SearchInput";
-import MovieList from "./MovieList";
+
 import { useSearchParams } from "react-router";
 
 function MoviesSearch() {
   const [searchParams, setSearchParams] = useSearchParams();
-
   const query = searchParams.get("query") || "";
   const page = Number(searchParams.get("page")) || 1;
+
   const { movies, totalPages, status, errorMessage } = useMoviesSearch(
     query,
     page,
