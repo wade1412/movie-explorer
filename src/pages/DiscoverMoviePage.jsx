@@ -1,22 +1,32 @@
 import { useSearchParams } from "react-router";
 import FilterBar from "../components/Discover/FilterBar";
-
-import { useMoviesFilter } from "../hooks/useMoviesFilter";
+import { useMoviesFilter as useDiscover } from "../hooks/useDiscover";
 import MovieList from "../components/MoviesList/MovieList";
 import ListControls from "../components/MoviesList/ListControls";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
+import ShowSelect from "../components/Discover/ShowSelect";
 
 function DiscoverMoviePage() {
   const [filterParams, setFilterParams] = useSearchParams();
 
+  const showType = filterParams.get("showType") || "movie";
   const sortBy = filterParams.get("sort_by") || "popularity.desc";
   const page = Number(filterParams.get("page")) || 1;
 
-  const { movies, totalPages, status, errorMessage } = useMoviesFilter(
+  const { movies, genres, totalPages, status, errorMessage } = useDiscover(
+    showType,
     sortBy,
     page,
   );
+
+  const handleShowTypeToggle = () => {
+    setFilterParams((prev) => {
+      prev.set("showType", showType === "movie" ? "tv" : "movie");
+      prev.set("page", 1);
+      return prev;
+    });
+  };
 
   const handleSortByChange = (newSort) => {
     setFilterParams((prev) => {
@@ -24,7 +34,6 @@ function DiscoverMoviePage() {
       prev.set("page", 1);
       return prev;
     });
-    console.log(newSort);
   };
   const handlePageChange = (newPage) => {
     setFilterParams((prev) => {
@@ -39,7 +48,15 @@ function DiscoverMoviePage() {
       initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <FilterBar onSortChange={handleSortByChange} currentSort={sortBy} />
+      <div className="flex gap-4 items-center">
+        <ShowSelect showType={showType} toggleShowType={handleShowTypeToggle} />
+        <FilterBar
+          showType={showType}
+          genres={genres}
+          onSortChange={handleSortByChange}
+          currentSort={sortBy}
+        />
+      </div>
 
       <MovieList
         movies={movies}

@@ -22,7 +22,7 @@ function MovieCard({ style, title, rating, id, posterPath }) {
                 onLoad={() => {
                   requestAnimationFrame(() => setIsImageLoading(false));
                 }}
-                src={`https://image.tmdb.org/t/p/w300${posterPath}`}
+                src={`https://image.tmdb.org/t/p/w500${posterPath}`}
                 alt={title}
                 loading="lazy"
                 className={`movie-poster h-full w-full rounded-lg object-cover shadow-lg transition-opacity duration-300 ${isImageLoading ? "opacity-0" : "opacity-100"}`}

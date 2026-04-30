@@ -19,9 +19,9 @@ export const getTrendingMovies = async () => {
   return data.results || [];
 };
 
-const getMoviesByParams = async (apiType, params, signal) => {
+const getMoviesByParams = async (apiType, showType, params, signal) => {
   const res = await fetch(
-    `https://api.themoviedb.org/3/${apiType}/movie?${params}`,
+    `https://api.themoviedb.org/3/${apiType}/${showType}?${params}`,
     {
       headers: {
         Authorization: `Bearer ${BEARER_TOKEN}`,
@@ -32,6 +32,8 @@ const getMoviesByParams = async (apiType, params, signal) => {
 
   const data = await res.json();
 
+  console.log(`https://api.themoviedb.org/3/${apiType}/${showType}?${params}`);
+
   if (!res.ok) {
     throw new Error(data.message || data.status_message || "Search HTTP error");
   }
@@ -40,10 +42,29 @@ const getMoviesByParams = async (apiType, params, signal) => {
 };
 
 export const searchMovies = (params, signal) =>
-  getMoviesByParams("search", params, signal);
+  getMoviesByParams("search", "movie", params, signal);
 
-export const getFilteredMovies = (params, signal) =>
-  getMoviesByParams("discover", params, signal);
+export const getFilteredShows = (showType, params, signal) =>
+  getMoviesByParams("discover", showType, params, signal);
+
+export const getGenres = async (showType) => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/genre/${showType}/list?language=en`,
+    {
+      headers: {
+        Authorization: `Bearer ${BEARER_TOKEN}`,
+      },
+    },
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || data.status_message || "Fetch Genre error");
+  }
+
+  return data.genres;
+};
 
 export const getMovieById = async (id, signal) => {
   const res = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {

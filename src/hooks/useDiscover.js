@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { getFilteredMovies } from "../services/api";
+import { getFilteredShows, getGenres } from "../services/api";
 
-export const useMoviesFilter = (sortBy, page) => {
+export const useMoviesFilter = (showType, sortBy, page) => {
   const [movies, setMovies] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ isError: false, message: "" });
@@ -19,14 +20,6 @@ export const useMoviesFilter = (sortBy, page) => {
     const signal = controller.signal;
 
     const getMovies = async () => {
-      if (!sortBy) {
-        //prevent fetch on empty input, clear error and movies, finish loading
-        setMovies([]);
-        setTotalPages(1);
-        setError({ isError: false, message: "" });
-        return;
-      }
-
       try {
         //start loading on fetch
         setIsLoading(true);
@@ -34,16 +27,20 @@ export const useMoviesFilter = (sortBy, page) => {
 
         const params = new URLSearchParams({
           sort_by: sortBy,
-          page,
+          page: String(page || 1),
           include_adult: false,
         });
 
-        const { results, total_pages } = await getFilteredMovies(
+        const { results, total_pages } = await getFilteredShows(
+          showType,
           params,
           signal,
         );
 
+        const showGenres = await getGenres(showType);
+
         setMovies(results || []);
+        setGenres(showGenres);
 
         setTotalPages(Math.min(total_pages, 100));
       } catch (err) {
@@ -65,17 +62,17 @@ export const useMoviesFilter = (sortBy, page) => {
     return () => {
       controller.abort();
     };
-  }, [sortBy, page]);
+  }, [showType, sortBy, page]);
 
   let status;
   if (!sortBy) status = "idle";
   else if (isLoading) status = "loading";
   else if (error.isError) status = "error";
-  else if (movies.length === 0) status = "empty";
   else status = "success";
 
   return {
     movies,
+    genres,
     page,
     totalPages,
     status,

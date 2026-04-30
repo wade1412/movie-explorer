@@ -77,7 +77,7 @@ function MovieList({
                 <MovieCard
                   style="movie-search-card"
                   id={movie.id}
-                  title={movie.title}
+                  title={movie.title || movie.name}
                   rating={movie.vote_average}
                   posterPath={movie.poster_path}
                 />

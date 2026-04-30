@@ -45,7 +45,7 @@ export const useMoviesSearch = (query, page) => {
 
         const params = new URLSearchParams({
           query: debouncedQuery,
-          page,
+          page: String(page || 1),
           include_adult: false,
         });
 

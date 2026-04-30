@@ -18,6 +18,10 @@
     background-color: var(--color-dark-blue-600);
   }
 
+  &:hover .movie-rating {
+    background-color: var(--color-dark-blue-900);
+  }
+
   &:active {
     transform: translateY(-5px) scale(0.97);
     transition-duration: 0.1s;
@@ -62,4 +66,8 @@
 
 .movie-trending-card .movie-rating {
   display: none;
+}
+
+.movie-rating {
+  transition: background-color 0.35s ease;
 }
