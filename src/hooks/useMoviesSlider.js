@@ -18,6 +18,8 @@ export const useMoviesSlider = () => {
 
         const trendingRes = await getTrendingMovies();
 
+        console.log(trendingRes);
+
         setMovies(trendingRes);
       } catch (err) {
         if (!ignore) {

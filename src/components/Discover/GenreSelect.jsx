@@ -1,21 +1,46 @@
+import { useMemo } from "react";
 import Select from "react-select";
 
-function GenreSelect({ genres }) {
-  const options = genres.map((genre) => ({
-    value: genre.id,
-    label: genre.name,
-  }));
+function GenreSelect({
+  labelText,
+  selectedGenres,
+  setSelectedGenres,
+  genresList,
+}) {
+  //Caching options to avoid array creation on every re-render
+  const options = useMemo(
+    () =>
+      genresList.map((genre) => ({
+        value: genre.id,
+        label: genre.name,
+      })),
+    [genresList],
+  );
 
-  // bg-dark-blue-600 rounded-xl px-4 text-lg border-2 border-transparent focus:border-2 focus:border-dark-blue-200 focus:bg-dark-blue-400 outline-0 transition-colors transition-duration-350
+  const selectedValues = useMemo(() => {
+    if (!selectedGenres) return;
+
+    const selectedSet = new Set(selectedGenres.split(","));
+    return options.filter((opt) => selectedSet.has(String(opt.value)));
+  }, [selectedGenres, options]);
+
+  const handleGenresChange = (selectedOptions) => {
+    const genreIds = selectedOptions
+      ? selectedOptions.map((opt) => opt.value)
+      : [];
+    setSelectedGenres(genreIds);
+  };
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex text-lg gap-2 items-center">
+      <label htmlFor="genre-select">{labelText}</label>
       <Select
+        id="genre-select"
         isMulti
         unstyled
         options={options}
-        // value={selectedGenres}
-        // onChange={handleGenresChange}
+        value={selectedValues}
+        onChange={handleGenresChange}
         placeholder="Pick genres..."
         noOptionsMessage={() => "Nothing found"}
         classNames={{

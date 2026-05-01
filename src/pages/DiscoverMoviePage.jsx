@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router";
 import FilterBar from "../components/Discover/FilterBar";
-import { useMoviesFilter as useDiscover } from "../hooks/useDiscover";
+import { useDiscover } from "../hooks/useDiscover";
 import MovieList from "../components/MoviesList/MovieList";
 import ListControls from "../components/MoviesList/ListControls";
 // eslint-disable-next-line no-unused-vars
@@ -11,12 +11,14 @@ function DiscoverMoviePage() {
   const [filterParams, setFilterParams] = useSearchParams();
 
   const showType = filterParams.get("showType") || "movie";
+  const withGenres = filterParams.get("with_genres") || "";
   const sortBy = filterParams.get("sort_by") || "popularity.desc";
   const page = Number(filterParams.get("page")) || 1;
 
-  const { movies, genres, totalPages, status, errorMessage } = useDiscover(
+  const { movies, genresList, totalPages, status, errorMessage } = useDiscover(
     showType,
     sortBy,
+    withGenres,
     page,
   );
 
@@ -35,6 +37,17 @@ function DiscoverMoviePage() {
       return prev;
     });
   };
+
+  const handleGenresChange = (selectedGenres) => {
+    setFilterParams((prev) => {
+      selectedGenres.length > 0
+        ? prev.set("with_genres", selectedGenres.join(","))
+        : prev.delete("with_genres");
+      prev.set("page", 1);
+      return prev;
+    });
+  };
+
   const handlePageChange = (newPage) => {
     setFilterParams((prev) => {
       prev.set("page", newPage);
@@ -52,7 +65,9 @@ function DiscoverMoviePage() {
         <ShowSelect showType={showType} toggleShowType={handleShowTypeToggle} />
         <FilterBar
           showType={showType}
-          genres={genres}
+          selectedGenres={withGenres}
+          setSelectedGenres={handleGenresChange}
+          genresList={genresList}
           onSortChange={handleSortByChange}
           currentSort={sortBy}
         />

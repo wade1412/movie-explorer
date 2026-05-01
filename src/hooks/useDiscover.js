@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { getFilteredShows, getGenres } from "../services/api";
 
-export const useMoviesFilter = (showType, sortBy, page) => {
+export const useDiscover = (showType, sortBy, withGenres, page) => {
   const [movies, setMovies] = useState([]);
-  const [genres, setGenres] = useState([]);
+  const [genresList, setGenresList] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ isError: false, message: "" });
@@ -27,6 +27,7 @@ export const useMoviesFilter = (showType, sortBy, page) => {
 
         const params = new URLSearchParams({
           sort_by: sortBy,
+          with_genres: withGenres,
           page: String(page || 1),
           include_adult: false,
         });
@@ -37,10 +38,7 @@ export const useMoviesFilter = (showType, sortBy, page) => {
           signal,
         );
 
-        const showGenres = await getGenres(showType);
-
         setMovies(results || []);
-        setGenres(showGenres);
 
         setTotalPages(Math.min(total_pages, 100));
       } catch (err) {
@@ -62,17 +60,35 @@ export const useMoviesFilter = (showType, sortBy, page) => {
     return () => {
       controller.abort();
     };
-  }, [showType, sortBy, page]);
+  }, [showType, sortBy, withGenres, page]);
+
+  //Fetch Genres List
+  useEffect(() => {
+    const getGenresList = async () => {
+      try {
+        const genres = await getGenres(showType);
+
+        setGenresList(genres);
+      } catch (err) {
+        setGenresList([]);
+        setError({
+          isError: true,
+          message: err.message || "Something went wrong",
+        });
+      }
+    };
+
+    getGenresList();
+  }, [showType]);
 
   let status;
-  if (!sortBy) status = "idle";
-  else if (isLoading) status = "loading";
+  if (isLoading) status = "loading";
   else if (error.isError) status = "error";
   else status = "success";
 
   return {
     movies,
-    genres,
+    genresList,
     page,
     totalPages,
     status,

@@ -5,8 +5,9 @@ import ListButton from "../MoviesList/ListButton";
 function SortSelect({ showType, currentSort, onSortChange }) {
   const [value, order] = currentSort.split(".");
   const isDesc = order === "desc";
-
   const options = SORT_OPTIONS[showType];
+
+  const selectedOption = options.find((opt) => opt.value === value) || null;
 
   const handleValueChange = (selectedOption) => {
     if (selectedOption) {
@@ -26,7 +27,7 @@ function SortSelect({ showType, currentSort, onSortChange }) {
         unstyled
         options={options}
         placeholder="Sort by..."
-        value={currentSort}
+        value={selectedOption}
         onChange={handleValueChange}
         classNames={{
           control: ({ isFocused }) => `
