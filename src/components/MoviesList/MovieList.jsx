@@ -85,11 +85,13 @@ function MovieList({
             ))}
           </ul>
 
-          <ListControls
-            page={page}
-            totalPages={totalPages}
-            changePageNumber={changePageNumber}
-          />
+          {movies.length > 0 && (
+            <ListControls
+              page={page}
+              totalPages={totalPages}
+              changePageNumber={changePageNumber}
+            />
+          )}
         </motion.div>
       )}
     </AnimatePresence>

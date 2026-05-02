@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getFilteredShows, getGenres } from "../services/api";
 
-export const useDiscover = (showType, sortBy, withGenres, page) => {
+export const useDiscover = (showType, page, sortBy, withGenres) => {
   const [movies, setMovies] = useState([]);
   const [genresList, setGenresList] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
