@@ -56,7 +56,7 @@ export const useFilter = () => {
   };
 
   return {
-    ...filters,
+    filters,
     updateShowType,
     updatePage,
     updateSort,
