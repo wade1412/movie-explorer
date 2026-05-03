@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { getFilteredShows, getGenres } from "../services/api";
 
-export const useDiscover = (showType, page, sortBy, withGenres) => {
+export const useDiscover = (
+  showType,
+  page,
+  sortBy,
+  withGenres,
+  voteAverage,
+  voteCount,
+) => {
   const [movies, setMovies] = useState([]);
   const [genresList, setGenresList] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -28,9 +35,13 @@ export const useDiscover = (showType, page, sortBy, withGenres) => {
         const params = new URLSearchParams({
           sort_by: sortBy,
           with_genres: withGenres,
+          "vote_average.gte": voteAverage,
+          "vote_count.gte": voteCount,
           page: String(page || 1),
           include_adult: false,
         });
+
+        console.log(params.toString());
 
         const { results, total_pages } = await getFilteredShows(
           showType,
@@ -60,7 +71,7 @@ export const useDiscover = (showType, page, sortBy, withGenres) => {
     return () => {
       controller.abort();
     };
-  }, [showType, sortBy, withGenres, page]);
+  }, [showType, sortBy, withGenres, page, voteAverage, voteCount]);
 
   //Fetch Genres List
   useEffect(() => {

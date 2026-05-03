@@ -4,7 +4,7 @@ import MovieList from "../components/MoviesList/MovieList";
 import ListControls from "../components/MoviesList/ListControls";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
-import ShowSelect from "../components/Discover/ShowSelect";
+import ShowToggle from "../components/Discover/ShowToggle";
 import { useFilter } from "../hooks/useFilter";
 import ListButton from "../components/MoviesList/ListButton";
 
@@ -28,6 +28,8 @@ function DiscoverMoviePage() {
     page,
     sortBy,
     withGenres,
+    voteAverage,
+    voteCount,
   );
 
   return (
@@ -37,7 +39,7 @@ function DiscoverMoviePage() {
       animate={{ opacity: 1, y: 0 }}
     >
       <div className="flex items-center gap-4 text-lg">
-        <ShowSelect showType={showType} toggleShowType={updateShowType} />
+        <ShowToggle showType={showType} toggleShowType={updateShowType} />
         <FilterBar
           showType={showType}
           currentSort={sortBy}
@@ -45,7 +47,9 @@ function DiscoverMoviePage() {
           genresList={genresList}
           selectedGenres={withGenres}
           setSelectedGenres={updateGenres}
+          voteAverage={voteAverage}
           updateVoteAverage={updateVoteAverage}
+          voteCount={voteCount}
           updateVoteCount={updateVoteCount}
         />
         <ListButton

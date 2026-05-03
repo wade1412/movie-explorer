@@ -1,4 +1,4 @@
-function ShowSelect({ showType, toggleShowType }) {
+function ShowToggle({ showType, toggleShowType }) {
   const isTV = showType === "tv";
   return (
     <label className="bg-dark-blue-600 inline-flex cursor-pointer items-center justify-center rounded-2xl py-2 px-6 text-lg">
@@ -23,4 +23,4 @@ function ShowSelect({ showType, toggleShowType }) {
   );
 }
 
-export default ShowSelect;
+export default ShowToggle;
