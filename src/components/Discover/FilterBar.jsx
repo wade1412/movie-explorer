@@ -3,11 +3,11 @@ import SortSelect from "./SortSelect";
 
 function FilterBar({
   showType,
-  selectedGenres,
-  setSelectedGenres,
-  genresList,
   currentSort,
   onSortChange,
+  genresList,
+  selectedGenres,
+  setSelectedGenres,
 }) {
   return (
     <div className="flex gap-4 justify-center">
