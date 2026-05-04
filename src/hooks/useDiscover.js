@@ -1,47 +1,56 @@
 import { useEffect, useState } from "react";
 import { getFilteredShows, getGenres } from "../services/api";
 
-export const useDiscover = (
-  showType,
-  page,
-  sortBy,
-  withGenres,
-  voteAverage,
-  voteCount,
-) => {
+const MAX_PAGES = 100;
+
+export const useDiscover = (filters) => {
+  // Destructuring filters
+  const {
+    showType,
+    page,
+    sortBy,
+    withGenres,
+    voteAverageRange,
+    voteCountRange,
+  } = filters;
+
+  // Data states
   const [movies, setMovies] = useState([]);
   const [genresList, setGenresList] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+
+  //Status states
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ isError: false, message: "" });
 
-  //Scroll to top on new page
+  // Scroll to top on new page
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
 
-  // --- Main Fetching Logic ---
+  // ----- Main Fetching Logic -----
   useEffect(() => {
-    //abort contoller for race condition control
+    // Abort contoller for race condition control
     const controller = new AbortController();
     const signal = controller.signal;
 
     const getMovies = async () => {
       try {
-        //start loading on fetch
+        // Start loading on fetch
         setIsLoading(true);
         setError({ isError: false, message: "" });
 
+        // Set params based on received filters
         const params = new URLSearchParams({
           sort_by: sortBy,
           with_genres: withGenres,
-          "vote_average.gte": voteAverage,
-          "vote_count.gte": voteCount,
+          "vote_average.gte": voteAverageRange[0],
+          "vote_average.lte": voteAverageRange[1],
+          "vote_count.gte": voteCountRange[0],
+          "vote_count.lte": voteCountRange[1],
           page: String(page || 1),
           include_adult: false,
         });
-
-        console.log(params.toString());
 
         const { results, total_pages } = await getFilteredShows(
           showType,
@@ -51,7 +60,7 @@ export const useDiscover = (
 
         setMovies(results || []);
 
-        setTotalPages(Math.min(total_pages, 100));
+        setTotalPages(Math.min(total_pages, MAX_PAGES));
       } catch (err) {
         if (err.name === "AbortError") return;
 
@@ -67,13 +76,13 @@ export const useDiscover = (
 
     getMovies();
 
-    //abort previous request on component unmount
+    // Abort previous request on component unmount
     return () => {
       controller.abort();
     };
-  }, [showType, sortBy, withGenres, page, voteAverage, voteCount]);
+  }, [showType, sortBy, withGenres, page, voteAverageRange, voteCountRange]);
 
-  //Fetch Genres List
+  // Fetch Genres List
   useEffect(() => {
     const getGenresList = async () => {
       try {
@@ -92,15 +101,11 @@ export const useDiscover = (
     getGenresList();
   }, [showType]);
 
-  let status;
-  if (isLoading) status = "loading";
-  else if (error.isError) status = "error";
-  else status = "success";
+  const status = isLoading ? "loading" : error.isError ? "error" : "success";
 
   return {
     movies,
     genresList,
-    page,
     totalPages,
     status,
     errorMessage: error.message,

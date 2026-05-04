@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router";
 
 export const useFilter = () => {
@@ -6,54 +6,117 @@ export const useFilter = () => {
 
   const filters = useMemo(
     () => ({
-      //Main query
+      // Main query
       showType: filterParams.get("showType") || "movie",
       page: Number(filterParams.get("page")) || 1,
 
-      //Filtering query
+      // Filtering query
       sortBy: filterParams.get("sort_by") || "popularity.desc",
       withGenres: filterParams.get("with_genres") || "",
-      voteAverage: filterParams.get("vote_average.gte") || "",
-      voteCount: filterParams.get("vote_count.gte") || "",
+
+      // Votes query
+      voteAverageRange: [
+        filterParams.get("vote_average.gte") || "",
+        filterParams.get("vote_average.lte") || "",
+      ],
+      voteCountRange: [
+        filterParams.get("vote_count.gte") || "",
+        filterParams.get("vote_count.lte") || "",
+      ],
     }),
     [filterParams],
   );
 
-  const updateFilter = (key, value) => {
-    setFilterParams((prev) => {
-      if (value === "" || value === null || value === undefined || value === 0)
-        prev.delete(key);
-      else prev.set(key, value);
+  // Regular filters logic
+  const updateFilter = useCallback(
+    (key, value) => {
+      setFilterParams((prev) => {
+        // Delete key from params on empty value
+        if (
+          value === "" ||
+          value === null ||
+          value === undefined ||
+          value === 0
+        )
+          prev.delete(key);
+        else prev.set(key, value);
 
-      if (key !== "page") {
-        prev.set("page", 1);
+        //reset page on filters change
+        if (key !== "page") {
+          prev.set("page", 1);
+        }
+
+        return prev;
+      });
+    },
+    [setFilterParams],
+  );
+
+  const updateShowType = useCallback(
+    () =>
+      updateFilter("showType", filters.showType === "movie" ? "tv" : "movie"),
+    [filters.showType, updateFilter],
+  );
+
+  const updatePage = useCallback(
+    (newPage) => updateFilter("page", newPage),
+    [updateFilter],
+  );
+
+  const updateSort = useCallback(
+    (newSort) => updateFilter("sort_by", newSort),
+    [updateFilter],
+  );
+
+  const updateGenres = useCallback(
+    (selectedGenres) =>
+      updateFilter(
+        "with_genres",
+        selectedGenres.length > 0 ? selectedGenres.join(",") : null,
+      ),
+    [updateFilter],
+  );
+
+  // Vote range update logic
+  const updateVotes = useCallback(
+    (keyGreater, keyLower, voteRange) => {
+      if (!Array.isArray(voteRange) || voteRange.length !== 2) {
+        throw new Error("Incorrect vote range data");
       }
 
-      return prev;
+      // MUI does min/max sorting itself, so just need to pass values in order
+      setFilterParams((prev) => {
+        // Greater than smaller value, lower than bigger value
+        prev.set(keyGreater, voteRange[0]);
+        prev.set(keyLower, voteRange[1]);
+        prev.set("page", 1);
+
+        return prev;
+      });
+    },
+    [setFilterParams],
+  );
+
+  const updateVoteAverageRange = useCallback(
+    (voteAverageRange) =>
+      updateVotes("vote_average.gte", "vote_average.lte", voteAverageRange),
+    [updateVotes],
+  );
+
+  const updateVoteCountRange = useCallback(
+    (voteCountRange) =>
+      updateVotes("vote_count.gte", "vote_count.lte", voteCountRange),
+    [updateVotes],
+  );
+
+  //Clear filters to default state
+  const clearFilters = useCallback(() => {
+    setFilterParams({
+      showType: "movie",
+      sortBy: "popularity.desc",
+      page: 1,
     });
-  };
-
-  const updateShowType = () =>
-    updateFilter("showType", filters.showType === "movie" ? "tv" : "movie");
-
-  const updatePage = (newPage) => updateFilter("page", newPage);
-
-  const updateSort = (newSort) => updateFilter("sort_by", newSort);
-
-  const updateGenres = (selectedGenres) =>
-    updateFilter(
-      "with_genres",
-      selectedGenres.length > 0 ? selectedGenres.join(",") : null,
-    );
-
-  const updateVoteAverage = (voteAverage) =>
-    updateFilter("vote_average.gte", voteAverage);
-  const updateVoteCount = (voteCount) =>
-    updateFilter("vote_count.gte", voteCount);
-
-  const clearFilters = () => {
-    setFilterParams({});
-  };
+  }, [setFilterParams]);
 
   return {
     filters,
@@ -61,8 +124,8 @@ export const useFilter = () => {
     updatePage,
     updateSort,
     updateGenres,
-    updateVoteAverage,
-    updateVoteCount,
+    updateVoteAverageRange,
+    updateVoteCountRange,
     clearFilters,
   };
 };
