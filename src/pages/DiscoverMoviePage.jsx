@@ -8,7 +8,7 @@ import ListControls from "../components/MoviesList/ListControls";
 import { motion } from "motion/react";
 
 function DiscoverMoviePage() {
-  // Join all actions into filterActions obj
+  // Get filters from query, join all actions into filterActions obj
   const { filters, ...filterActions } = useFilter();
 
   const { movies, genresList, totalPages, status, errorMessage } =

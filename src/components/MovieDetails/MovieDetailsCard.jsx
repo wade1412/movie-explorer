@@ -2,6 +2,9 @@ import { Skeleton } from "@mui/material";
 import { useState } from "react";
 import MovieDetailsGenres from "./MovieDetailsGenres";
 
+const detailsStyle = (gap = 4) =>
+  `bg-dark-blue-900 flex w-full flex-col gap-${gap} rounded-xl px-6 py-4 shadow-lg`;
+
 function MovieDetailsCard({ movie }) {
   // Local state for Image loading
   const [isImageLoading, setIsImageLoading] = useState(true);
@@ -23,7 +26,7 @@ function MovieDetailsCard({ movie }) {
   return (
     <section className="mx-auto max-w-5xl p-6">
       <div className="grid justify-center gap-6 md:grid-cols-2">
-        <div className="bg-dark-blue-200 flex items-center overflow-hidden rounded-2xl shadow-2xl">
+        <div className="bg-dark-blue-600 flex items-center overflow-hidden rounded-2xl shadow-2xl">
           {movie.poster_path ? (
             <>
               {isImageLoading && <Skeleton animation="wave" />}
@@ -47,8 +50,8 @@ function MovieDetailsCard({ movie }) {
           )}
         </div>
 
-        <div className="flex flex-col gap-6">
-          <div className="bg-dark-blue-700 border-dark-blue-200 flex flex-col gap-1 rounded-2xl border px-2 py-3 shadow-lg">
+        <div className="flex flex-col gap-5">
+          <div className={detailsStyle(1)}>
             <h3 className="text-blue mx-auto text-center text-3xl font-bold">
               {movie.title}
             </h3>
@@ -58,23 +61,23 @@ function MovieDetailsCard({ movie }) {
             <p className="text-light-blush mx-auto italic">{movie.tagline}</p>
           </div>
 
-          <div className="movie-info bg-dark-blue-700 border-dark-blue-200 mx-auto flex w-full flex-col gap-4 rounded-xl border px-4 py-4 shadow-lg">
+          <div className={detailsStyle()}>
             <p className="">{movie.overview}</p>
 
             <MovieDetailsGenres genres={movie.genres} />
           </div>
 
-          <div className="movie-meta bg-dark-blue-700 border-dark-blue-200 mx-auto flex w-full flex-col gap-4 rounded-xl border px-4 py-4 shadow-lg">
+          <div className={detailsStyle()}>
             <p>Released: {formatDate(movie.release_date)}</p>
 
             <p>Runtime: {movie.runtime} minutes</p>
 
             {movie.budget !== 0 && (
-              <p>Budget: {`${movie.budget.toLocaleString()}`}</p>
+              <p>Budget: {`$${movie.budget.toLocaleString()}`}</p>
             )}
 
             {movie.revenue !== 0 && (
-              <p>Revenue: {`${movie.revenue.toLocaleString()}`}</p>
+              <p>Revenue: {`$${movie.revenue.toLocaleString()}`}</p>
             )}
           </div>
         </div>

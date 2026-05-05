@@ -1,15 +1,20 @@
+import { Link } from "react-router";
+
 function MovieDetailsGenres({ genres }) {
   return (
-    <div className="flex items-center gap-2 w-full">
+    <div className="flex items-center gap-4 w-full font-semibold">
       Genres:{" "}
-      {genres.map((genre) => (
-        <span
-          key={genre.id}
-          className="bg-dark-blue-900 rounded-lg px-2 py-1 text-base cursor-pointer"
-        >
-          {genre.name}
-        </span>
-      ))}
+      <div className=" flex flex-wrap gap-2 px-2">
+        {genres.map((genre) => (
+          <Link
+            to={`/discover?with_genres=${genre.id}`}
+            key={genre.id}
+            className="bg-dark-blue-700 rounded-lg px-3 py-1 text-base cursor-pointer hover:-translate-y-1 hover:bg-dark-blue-600 transition-all duration-300 font-light"
+          >
+            {genre.name}
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
