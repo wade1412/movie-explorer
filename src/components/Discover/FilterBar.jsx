@@ -39,7 +39,7 @@ function FilterBar({
       </div>
       <div className="flex gap-10 justify-center items-center">
         <ValueSlider
-          key={voteAverageRange.join(",")}
+          key={`vote-average-${voteAverageRange.join(",")}`}
           labelText="Rating"
           minValue={0}
           maxValue={10}
@@ -48,7 +48,7 @@ function FilterBar({
           updateValueRange={updateVoteAverageRange}
         />
         <ValueSlider
-          key={voteCountRange.join(",")}
+          key={`vote-count-${voteCountRange.join(",")}`}
           labelText="Number of votes"
           minValue={0}
           maxValue={40000}

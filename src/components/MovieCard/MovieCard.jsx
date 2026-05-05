@@ -18,8 +18,9 @@ function MovieCard({ style, title, rating, id, posterPath }) {
               {isImageLoading && <Skeleton />}
 
               <img
-                //avoid flicker on cached images, by using one frame
+                // Change local state for Image on its load
                 onLoad={() => {
+                  // Avoid flicker on cached images, by using one frame
                   requestAnimationFrame(() => setIsImageLoading(false));
                 }}
                 src={`https://image.tmdb.org/t/p/w500${posterPath}`}
