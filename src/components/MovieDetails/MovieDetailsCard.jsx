@@ -24,9 +24,9 @@ function MovieDetailsCard({ movie }) {
   };
 
   return (
-    <section className="mx-auto max-w-5xl p-6">
-      <div className="grid justify-center gap-6 md:grid-cols-2">
-        <div className="bg-dark-blue-600 flex items-center overflow-hidden rounded-2xl shadow-2xl">
+    <section className="mx-auto max-w-6xl p-6">
+      <div className="grid justify-center gap-6 md:grid-cols-2 ">
+        <div className="bg-dark-blue-600 flex items-center overflow-hidden rounded-2xl shadow-2xl ">
           {movie.poster_path ? (
             <>
               {isImageLoading && <Skeleton animation="wave" />}
@@ -50,7 +50,7 @@ function MovieDetailsCard({ movie }) {
           )}
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4 ">
           <div className={detailsStyle(1)}>
             <h3 className="text-blue mx-auto text-center text-3xl font-bold">
               {movie.title}
@@ -67,18 +67,54 @@ function MovieDetailsCard({ movie }) {
             <MovieDetailsGenres genres={movie.genres} />
           </div>
 
-          <div className={detailsStyle()}>
-            <p>Released: {formatDate(movie.release_date)}</p>
+          <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
+            <div className={`${detailsStyle()}  justify-center`}>
+              {movie.spoken_languages && (
+                <p>
+                  🌐 Language:{" "}
+                  <i>{movie.spoken_languages.map((l) => l.name).join(", ")}</i>
+                </p>
+              )}
 
-            <p>Runtime: {movie.runtime} minutes</p>
+              <p>
+                📅 Released: <i>{formatDate(movie.release_date)}</i>
+              </p>
 
-            {movie.budget !== 0 && (
-              <p>Budget: {`$${movie.budget.toLocaleString()}`}</p>
-            )}
+              <p>
+                🎬 Runtime: <i>{movie.runtime} minutes</i>
+              </p>
 
-            {movie.revenue !== 0 && (
-              <p>Revenue: {`$${movie.revenue.toLocaleString()}`}</p>
-            )}
+              {movie.budget !== 0 && (
+                <p>
+                  💰 Budget: <i>{`$${movie.budget.toLocaleString()}`}</i>
+                </p>
+              )}
+
+              {movie.revenue !== 0 && (
+                <p>
+                  📈 Revenue: <i>{`$${movie.revenue.toLocaleString()}`}</i>
+                </p>
+              )}
+            </div>
+
+            <div className={`${detailsStyle()}  justify-center`}>
+              <div className="flex flex-col gap-1">
+                <p>Production companies: </p>
+                {movie.production_companies.map((c) => (
+                  <span key={c.id} className="font-light ">
+                    {c.name}
+                  </span>
+                ))}
+              </div>
+              <div>
+                <p>Production countries: </p>
+                {movie.production_countries.map((c) => (
+                  <span key={c.id} className="font-light ">
+                    {c.name}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

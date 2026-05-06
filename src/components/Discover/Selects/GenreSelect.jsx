@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import Select from "react-select";
-import { controlStyle, menuStyle, optionStyle } from "./styles";
+import { controlStyle, menuStyle, optionStyle } from "../discoverStyles";
 
 function GenreSelect({
   labelText,
@@ -33,7 +33,7 @@ function GenreSelect({
   };
 
   return (
-    <div className="flex text-lg gap-2 items-center">
+    <div className="flex flex-col md:flex-row text-lg gap-2 items-center">
       <label htmlFor="genre-select">{labelText}</label>
       <Select
         id="genre-select"

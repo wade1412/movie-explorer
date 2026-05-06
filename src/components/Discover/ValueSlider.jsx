@@ -1,39 +1,7 @@
 import { Box, Slider, Typography } from "@mui/material";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useCallback, useEffect, useState } from "react";
-
-const sliderSx = {
-  color: "#3e4556",
-  height: 6,
-  "& .MuiSlider-track": {
-    border: "none",
-    backgroundColor: "#a1adbd",
-  },
-  "& .MuiSlider-rail": {
-    backgroundColor: "#1e293b",
-    opacity: 1,
-    border: "1px solid #d1d9e6",
-  },
-  "& .MuiSlider-thumb": {
-    height: 18,
-    width: 18,
-    backgroundColor: "#ffffff",
-    border: "1px solid #1e293b",
-    "&:hover, &.Mui-active": {
-      boxShadow: "0px 0px 0px 8px rgba(116, 138, 174, 0.16)",
-    },
-    "&::before": {
-      display: "none",
-    },
-  },
-  "& .MuiSlider-valueLabel": {
-    backgroundColor: "#1a1f2b",
-    color: "#fff",
-    borderRadius: "6px",
-    fontSize: "0.85rem",
-    border: "1px solid #d1d9e6",
-  },
-};
+import { sliderSx } from "./discoverStyles";
 
 function ValueSlider({
   labelText,
@@ -62,12 +30,19 @@ function ValueSlider({
   }, []);
 
   return (
-    <div className="flex gap-6 items-center justify-center">
-      <label className="text-lg text-white whitespace-nowrap">
-        {labelText}
-      </label>
+    <div className="bg-dark-blue-800/50 flex w-full min-w-50 justify-center gap-4 rounded-2xl border border-dark-blue-600 px-6 md:w-auto">
+      <div className="flex w-fit items-center justify-center">
+        <label className="text-lg tracking-wider text-white">{labelText}</label>
+      </div>
 
-      <Box sx={{ width: 125, paddingTop: "10px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
         <Slider
           getAriaLabel={() => labelText}
           value={localValue}

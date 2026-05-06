@@ -2,9 +2,9 @@ import { Link } from "react-router";
 
 function MovieDetailsGenres({ genres }) {
   return (
-    <div className="flex items-center gap-4 w-full font-semibold">
+    <div className="flex items-center gap-2 w-full font-semibold">
       Genres:{" "}
-      <div className=" flex flex-wrap gap-2 px-2">
+      <div className="flex flex-wrap gap-2 px-2">
         {genres.map((genre) => (
           <Link
             to={`/discover?with_genres=${genre.id}`}

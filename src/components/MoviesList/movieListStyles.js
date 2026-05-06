@@ -26,7 +26,7 @@ export const cardVariants = {
 //Tailwind Classes
 
 export const gridClass =
-  "grid grid-cols-1 gap-6 transition-opacity duration-300 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4";
+  "grid grid-cols-1 gap-6 transition-opacity duration-300 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 ";
 
 export const headingClass =
   "text-3xl font-bold mx-auto text-center p-5 mt-10 rounded-xl bg-dark-blue-200 max-w-1/2";

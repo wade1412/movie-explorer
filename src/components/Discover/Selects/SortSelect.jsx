@@ -1,6 +1,6 @@
 import Select from "react-select";
 import ListButton from "../../MoviesList/ListButton";
-import { controlStyle, menuStyle, optionStyle } from "./styles";
+import { controlStyle, menuStyle, optionStyle } from "../discoverStyles";
 import { SORT_OPTIONS } from "./selectOptions";
 
 function SortSelect({ showType, currentSort, onSortChange }) {
@@ -47,7 +47,7 @@ function SortSelect({ showType, currentSort, onSortChange }) {
           <div
             className={`flex text-center align-center transition-transform duration-350 text-lg font-light h-fit ${isDesc ? "rotate-180" : "rotate-0"}`}
           >
-            ⇪
+            👆
           </div>
         }
         handleClick={toggleOrder}
