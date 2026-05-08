@@ -26,7 +26,7 @@ function MovieCarousel({ movies }) {
   }, [xTranslation, width]);
 
   return (
-    <div className="overflow-hidden bg-dark-blue-800 py-4 sm:py-6 lg:py-8 rounded-xl mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+    <div className="overflow-hidden bg-dark-blue-700 py-4 sm:py-6 lg:py-8 rounded-xl mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
       <motion.div
         className="flex w-max gap-4 shrink-0"
         ref={ref}
@@ -40,7 +40,7 @@ function MovieCarousel({ movies }) {
             <MovieCard
               style="movie-trending-card"
               id={movie.id}
-              title={movie.title}
+              title={movie.title || movie.name}
               rating={movie.vote_average}
               posterPath={movie.poster_path}
             />

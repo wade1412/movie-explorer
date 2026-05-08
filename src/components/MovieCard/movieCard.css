@@ -56,12 +56,14 @@
   padding-bottom: calc(var(--spacing) * 6);
 }
 
-.movie-search-card .movie-title {
-  font-size: 1.25rem;
+.movie-title {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.2;
 }
 
-.movie-trending-card .movie-title {
-  font-size: 1.125rem;
+.movie-search-card .movie-title {
+  margin-bottom: 0.5rem;
 }
 
 .movie-trending-card .movie-rating {

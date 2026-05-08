@@ -9,22 +9,34 @@ const getShowsByParams = async (
   signal,
 ) => {
   let endpoint;
+  let query = "";
 
-  // Getting endpoint based on apiType
-  if (!apiType) {
-    endpoint = `${showType}`;
-  } else if (apiType === "trending") {
-    endpoint = `${apiType}/${showType}/week`;
-  } else if (apiType === "getId") {
-    endpoint = `${showType}/${params}`;
-  } else {
-    endpoint = `${apiType}/${showType}`;
+  // Getting endpoint and query based on apiType
+  switch (apiType) {
+    case "trending":
+      // trending/{movie / tv show}/{time period}
+      endpoint = `trending/${showType}/${params}`;
+      break;
+    case "getId":
+      // {movie id}
+      endpoint = `${showType}/${params}`;
+      break;
+    case "search":
+    case "discover":
+      endpoint = `${apiType}/${showType}`;
+      query = `?${params}`;
+      break;
+    case null:
+    case undefined:
+      endpoint = showType;
+      query = params ? `?${params}` : "";
+      break;
+    default:
+      endpoint = `${apiType}/${showType}`;
+      query = params ? `?${params}` : "";
   }
 
-  // Add query string to URL, if it isnt getId
-  const queryString = apiType !== "getId" && params ? `?${params}` : "";
-
-  const fetchURL = `${BASE_URL}/${endpoint}${queryString}`;
+  const fetchURL = `${BASE_URL}/${endpoint}${query}`;
 
   const res = await fetch(fetchURL, {
     headers: {
@@ -39,7 +51,7 @@ const getShowsByParams = async (
     throw new Error(data.message || data.status_message || "Search HTTP error");
   }
 
-  //for trending movies we dont need pages, return results only
+  // For trending movies we dont need pages, return results only
   return apiType === "trending" ? data.results : data;
 };
 
@@ -49,8 +61,8 @@ export const searchMovies = (params, signal) =>
 export const getFilteredShows = (showType, params, signal) =>
   getShowsByParams("discover", showType, params, signal);
 
-export const getTrendingMovies = (params = "", signal = null) => {
-  return getShowsByParams("trending", "movie", params, signal);
+export const getTrendingMovies = (showType, timePeriod, signal) => {
+  return getShowsByParams("trending", showType, timePeriod, signal);
 };
 
 export const getMovieById = async (id, signal = null) =>

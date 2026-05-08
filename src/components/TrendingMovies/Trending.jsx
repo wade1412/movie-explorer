@@ -3,19 +3,50 @@ import MovieCarousel from "./MovieCarousel";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
 import SkeletonTrending from "./SkeletonTrending";
+import ValueToggle from "../ValueToggle";
+import { useState } from "react";
 
 function Trending() {
-  const { movies, status, errorMessage } = useMoviesSlider();
+  const [showType, setShowType] = useState("movie");
+  const [timePeriod, setTimePeriod] = useState("day");
+
+  const { movies, status, errorMessage } = useMoviesSlider(
+    showType,
+    timePeriod,
+  );
+
+  const handleShowToggle = () => {
+    setShowType(showType === "movie" ? "tv" : "movie");
+  };
+
+  const handleTimePeriodToggle = () => {
+    setTimePeriod(timePeriod === "day" ? "week" : "day");
+  };
 
   return (
     <>
       <div
-        className="w-full px-4 bg-dark-blue-900 rounded-lg
+        className="w-full px-4 py-6 bg-dark-blue-900 rounded-xl max-w-7xl mx-auto
       "
       >
-        <h2 className="rounded-lg flex w-fit p-4 text-2xl font-semibold mt-2 mb-2 ">
+        <h2 className="text-center text-xl md:text-2xl lg:text-3xl font-semibold mb-4">
           Trending movies 🔥
         </h2>
+
+        <div className="flex gap-2 py-4">
+          <ValueToggle
+            value={showType}
+            toggleValue={handleShowToggle}
+            valueOne="Movie"
+            valueTwo="TV"
+          />
+          <ValueToggle
+            value={timePeriod}
+            toggleValue={handleTimePeriodToggle}
+            valueOne="Day"
+            valueTwo="Week"
+          />
+        </div>
 
         <AnimatePresence mode="wait">
           {status === "loading" && (

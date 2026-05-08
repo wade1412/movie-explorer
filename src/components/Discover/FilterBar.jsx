@@ -1,4 +1,4 @@
-import ShowToggle from "./ShowToggle";
+import ValueToggle from "../ValueToggle";
 import GenreSelect from "./Selects/GenreSelect";
 import SortSelect from "./Selects/SortSelect";
 import ListButton from "../MoviesList/ListButton";
@@ -26,7 +26,12 @@ function FilterBar({
     <div className="flex flex-col flex-wrap md:items-center gap-6 text-lg md:flex-row md:justify-center bg-dark-blue-800/50 p-4 rounded-2xl">
       {/*Main Filters: Row 1*/}
       <div className="flex flex-wrap justify-center gap-4 w-full">
-        <ShowToggle showType={showType} toggleShowType={updateShowType} />
+        <ValueToggle
+          value={showType}
+          toggleValue={updateShowType}
+          valueOne="Movie"
+          valueTwo="TV"
+        />
         <SortSelect
           showType={showType}
           onSortChange={updateSort}
@@ -42,7 +47,7 @@ function FilterBar({
 
       {/*Sliders and Clear: Row 2*/}
       <div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-end">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-end position-center">
           <ValueSlider
             key={`vote-average-${voteAverageRange.join(",")}`}
             labelText="Rating"

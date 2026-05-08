@@ -15,7 +15,7 @@ export const optionStyle = ({ isFocused, isSelected }) => `
 export const sliderSx = {
   color: "#3e4556",
   height: 6,
-  padding: "10px",
+  padding: "20px 0",
   "& .MuiSlider-track": {
     border: "none",
     backgroundColor: "#a1adbd",
@@ -46,4 +46,4 @@ export const sliderSx = {
   },
 };
 
-export const clearBtnStyles = `min-w-40 font-semibold rounded-xl px-6 py-2 bg-dark-blue-800 border-2 border-dark-blue-600 hover:bg-dark-blue-400 cursor-pointer hover:-translate-y-1 hover:border-dark-blue-900 text-white transition-all duration-200 active:scale-95`;
+export const clearBtnStyles = `min-w-40 font-semibold rounded-xl px-6 py-2 bg-dark-blue-800 border-2 border-dark-blue-600 hover:bg-dark-blue-400 hover:border-dark-blue-600/50 cursor-pointer hover:-translate-y-1 text-white transition-all duration-200 active:scale-95`;

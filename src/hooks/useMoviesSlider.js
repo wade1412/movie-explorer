@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTrendingMovies } from "../services/api";
 
-export const useMoviesSlider = () => {
+export const useMoviesSlider = (showType, timePeriod) => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -9,6 +9,8 @@ export const useMoviesSlider = () => {
 
   useEffect(() => {
     let ignore = false;
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     const getTrending = async () => {
       try {
@@ -16,10 +18,16 @@ export const useMoviesSlider = () => {
         setErrorMessage("");
         setIsLoading(true);
 
-        const trendingRes = await getTrendingMovies();
+        const trendingRes = await getTrendingMovies(
+          showType,
+          timePeriod,
+          signal,
+        );
 
         setMovies(trendingRes);
       } catch (err) {
+        if (err.name === "AbortError") return;
+
         if (!ignore) {
           setIsLoading(false);
           setIsError(true);
@@ -33,8 +41,11 @@ export const useMoviesSlider = () => {
 
     getTrending();
 
-    return () => (ignore = true);
-  }, []);
+    return () => {
+      ignore = true;
+      controller.abort();
+    };
+  }, [showType, timePeriod]);
 
   let status;
 
