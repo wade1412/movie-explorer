@@ -2,12 +2,14 @@
 
 @theme {
   /* Main dark palette */
-  --color-dark-blue-950: #0f1219; /* Bg*/
+  --color-dark-blue-950: #0f1219; /* Bg */
   --color-dark-blue-900: #1a1f2b; /* Cards */
   --color-dark-blue-800: #242a38;
   --color-dark-blue-700: #292e3b;
   --color-dark-blue-600: #3e4556;
+  --color-dark-blue-500: #4a5468;
   --color-dark-blue-400: #56647b;
+  --color-dark-blue-300: #7c899c;
   --color-dark-blue-200: #a1adbd;
   --color-dark-blue-100: #d1d9e6;
 
@@ -24,6 +26,23 @@
 html {
   scrollbar-gutter: auto;
   background-color: var(--color-dark-blue-950);
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: var(--color-dark-blue-600);
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-dark-blue-300);
+  border-radius: 1rem;
+}
+
+/* Thumb on hover */
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-dark-blue-200);
 }
 
 .movie-details-poster {

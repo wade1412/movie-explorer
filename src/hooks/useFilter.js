@@ -1,3 +1,4 @@
+import { debounce } from "@mui/material";
 import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router";
 
@@ -41,9 +42,9 @@ export const useFilter = () => {
           prev.delete(key);
         else prev.set(key, value);
 
-        //reset page on filters change
+        // Reset page on filters change
         if (key !== "page") {
-          prev.set("page", 1);
+          prev.set("page", "1");
         }
 
         return prev;
@@ -59,7 +60,9 @@ export const useFilter = () => {
   );
 
   const updatePage = useCallback(
-    (newPage) => updateFilter("page", newPage),
+    (newPage) => {
+      updateFilter("page", String(newPage));
+    },
     [updateFilter],
   );
 
@@ -89,7 +92,7 @@ export const useFilter = () => {
         // Greater than smaller value, lower than bigger value
         prev.set(keyGreater, voteRange[0]);
         prev.set(keyLower, voteRange[1]);
-        prev.set("page", 1);
+        prev.set("page", "1");
 
         return prev;
       });
@@ -97,15 +100,19 @@ export const useFilter = () => {
     [setFilterParams],
   );
 
-  const updateVoteAverageRange = useCallback(
-    (voteAverageRange) =>
-      updateVotes("vote_average.gte", "vote_average.lte", voteAverageRange),
+  const updateVoteAverageRange = useMemo(
+    () =>
+      debounce((voteAverageRange) => {
+        updateVotes("vote_average.gte", "vote_average.lte", voteAverageRange);
+      }, 300),
     [updateVotes],
   );
 
-  const updateVoteCountRange = useCallback(
-    (voteCountRange) =>
-      updateVotes("vote_count.gte", "vote_count.lte", voteCountRange),
+  const updateVoteCountRange = useMemo(
+    () =>
+      debounce((voteCountRange) => {
+        updateVotes("vote_count.gte", "vote_count.lte", voteCountRange);
+      }, 300),
     [updateVotes],
   );
 
@@ -113,8 +120,8 @@ export const useFilter = () => {
   const clearFilters = useCallback(() => {
     setFilterParams({
       showType: "movie",
-      sortBy: "popularity.desc",
-      page: 1,
+      sort_by: "popularity.desc",
+      page: "1",
     });
   }, [setFilterParams]);
 

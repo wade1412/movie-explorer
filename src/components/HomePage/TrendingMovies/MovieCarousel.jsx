@@ -1,9 +1,9 @@
-import useMeasure from "react-use-measure";
-import MovieCard from "../MovieCard/MovieCard";
 // eslint-disable-next-line no-unused-vars
 import { motion, useMotionValue } from "motion/react";
 import { useEffect } from "react";
 import { animate } from "motion";
+import useMeasure from "react-use-measure";
+import MovieCard from "../../MovieCard/MovieCard";
 
 function MovieCarousel({ movies }) {
   let [ref, { width }] = useMeasure();

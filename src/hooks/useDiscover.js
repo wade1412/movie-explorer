@@ -14,6 +14,9 @@ export const useDiscover = (filters) => {
     voteCountRange,
   } = filters;
 
+  const [voteAverageGte, voteAverageLte] = voteAverageRange;
+  const [voteCountGte, voteCountLte] = voteCountRange;
+
   // Data states
   const [movies, setMovies] = useState([]);
   const [genresList, setGenresList] = useState([]);
@@ -44,10 +47,10 @@ export const useDiscover = (filters) => {
         const params = new URLSearchParams({
           sort_by: sortBy,
           with_genres: withGenres,
-          "vote_average.gte": voteAverageRange[0],
-          "vote_average.lte": voteAverageRange[1],
-          "vote_count.gte": voteCountRange[0],
-          "vote_count.lte": voteCountRange[1],
+          "vote_average.gte": voteAverageGte,
+          "vote_average.lte": voteAverageLte,
+          "vote_count.gte": voteCountGte,
+          "vote_count.lte": voteCountLte,
           page: String(page || 1),
           include_adult: false,
         });
@@ -80,7 +83,16 @@ export const useDiscover = (filters) => {
     return () => {
       controller.abort();
     };
-  }, [showType, sortBy, withGenres, page, voteAverageRange, voteCountRange]);
+  }, [
+    showType,
+    sortBy,
+    withGenres,
+    page,
+    voteAverageGte,
+    voteAverageLte,
+    voteCountGte,
+    voteCountLte,
+  ]);
 
   // Fetch Genres List
   useEffect(() => {

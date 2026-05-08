@@ -23,7 +23,7 @@ function FilterBar({
     filters;
 
   return (
-    <div className="flex flex-col flex-wrap md:items-center gap-6 text-lg md:flex-row md:justify-center bg-dark-blue-800/50 p-4 rounded-2xl">
+    <div className="flex flex-col flex-wrap text-base md:text-lg md:items-center gap-6 md:flex-row md:justify-center bg-dark-blue-800/50 p-4 rounded-2xl">
       {/*Main Filters: Row 1*/}
       <div className="flex flex-wrap justify-center gap-4 w-full">
         <ValueToggle
@@ -49,7 +49,6 @@ function FilterBar({
       <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-end position-center">
           <ValueSlider
-            key={`vote-average-${voteAverageRange.join(",")}`}
             labelText="Rating"
             minValue={0}
             maxValue={10}
@@ -58,7 +57,6 @@ function FilterBar({
             updateValueRange={updateVoteAverageRange}
           />
           <ValueSlider
-            key={`vote-count-${voteCountRange.join(",")}`}
             labelText="Votes"
             minValue={0}
             maxValue={40000}

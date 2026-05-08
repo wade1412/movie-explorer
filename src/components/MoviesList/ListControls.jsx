@@ -25,11 +25,11 @@ function ListControls({ page, totalPages, changePageNumber }) {
   const hasNext = page < totalPages;
 
   return (
-    <div className="bg-dark-blue-900 mx-auto mt-6 flex w-fit justify-center gap-4 rounded-xl px-6 py-4 text-xl">
+    <div className="bg-dark-blue-900 mx-auto mt-4 flex flex-wrap md:flex-nowrap justify-center gap-2 rounded-xl px-6 py-4 text-base md:text-lg">
       <ListButton
         text="Prev"
         isDisabled={!hasPrev}
-        handleClick={() => changePageNumber(page - 1)}
+        handleClick={() => changePageNumber(Number(page) - 1)}
       />
 
       <div className="flex items-center justify-between gap-2 px-4">
@@ -44,7 +44,9 @@ function ListControls({ page, totalPages, changePageNumber }) {
           ) : (
             <button
               key={p}
-              onClick={() => changePageNumber(p)}
+              onClick={() => {
+                changePageNumber(p);
+              }}
               disabled={p === page}
               className={`h-fit rounded-lg p-2 px-4 transition-colors ${p === page ? "bg-dark-blue-400" : "hover:bg-dark-blue-600 cursor-pointer"} `}
             >
@@ -57,7 +59,9 @@ function ListControls({ page, totalPages, changePageNumber }) {
       <ListButton
         text="Next"
         isDisabled={!hasNext}
-        handleClick={() => changePageNumber(page + 1)}
+        handleClick={() => {
+          changePageNumber(Number(page) + 1);
+        }}
       />
     </div>
   );

@@ -85,7 +85,7 @@ function MovieList({
             ))}
           </ul>
 
-          {movies.length > 0 && (
+          {movies.length > 0 && totalPages > 0 && (
             <ListControls
               page={page}
               totalPages={totalPages}

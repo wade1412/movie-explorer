@@ -24,8 +24,6 @@ export const useHomeMoviesList = (listType) => {
 
         const { results } = await getHomeMoviesList(debouncedListType, signal);
 
-        console.log(results);
-
         setMovies(results || []);
       } catch (err) {
         if (err.name === "AbortError") return;
@@ -51,7 +49,6 @@ export const useHomeMoviesList = (listType) => {
   let status;
   if (isLoading) status = "loading";
   else if (error.isError) status = "error";
-  else if (movies.length === 0) status = "empty";
   else status = "success";
 
   return {

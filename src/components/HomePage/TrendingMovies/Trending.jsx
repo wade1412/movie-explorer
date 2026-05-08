@@ -1,10 +1,10 @@
-import { useMoviesSlider } from "../../hooks/useMoviesSlider";
-import MovieCarousel from "./MovieCarousel";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
-import SkeletonTrending from "./SkeletonTrending";
-import ValueToggle from "../ValueToggle";
 import { useState } from "react";
+import { useMoviesSlider } from "../../../hooks/useMoviesSlider";
+import MovieCarousel from "./MovieCarousel";
+import SkeletonTrending from "./SkeletonTrending";
+import ValueToggle from "../../ValueToggle";
 
 function Trending() {
   const [showType, setShowType] = useState("movie");
@@ -25,15 +25,12 @@ function Trending() {
 
   return (
     <>
-      <div
-        className="w-full px-4 py-6 bg-dark-blue-900 rounded-xl max-w-7xl mx-auto
-      "
-      >
-        <h2 className="text-center text-xl md:text-2xl lg:text-3xl font-semibold mb-2">
+      <div className="bg-dark-blue-900 mx-auto w-full rounded-xl px-4 py-6 text-base md:text-lg">
+        <h2 className="mb-2 text-center text-xl font-semibold md:ml-4 md:text-start md:text-2xl lg:text-3xl">
           Trending 🔥
         </h2>
 
-        <div className="flex gap-2 py-2 mb-2">
+        <div className="mb-2 flex flex-col items-center gap-2 py-2 md:flex-row">
           <ValueToggle
             value={showType}
             toggleValue={handleShowToggle}
@@ -68,7 +65,7 @@ function Trending() {
               exit={{ opacity: 0 }}
             >
               <h2
-                className={`text-3xl font-bold mx-auto text-center p-5 mt-10 rounded-xl bg-dark-blue-200 max-w-1/2 text-blush`}
+                className={`bg-dark-blue-200 text-blush mx-auto mt-10 max-w-1/2 rounded-xl p-5 text-center text-3xl font-bold`}
               >
                 {errorMessage || "Something went wrong"}
               </h2>

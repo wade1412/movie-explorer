@@ -10,9 +10,7 @@ function HomePageList() {
 
   const selectedList = listParams.get("list") || "now_playing";
 
-  const { movies, status, errorMessage } = useHomeMoviesList(
-    listParams.get("list"),
-  );
+  const { movies, status, errorMessage } = useHomeMoviesList(selectedList);
 
   const handleListChange = (e) => {
     const value = e.target.value;
@@ -23,7 +21,7 @@ function HomePageList() {
   };
 
   return (
-    <div className="bg-dark-blue-900 rounded-xl flex flex-col gap-2 p-2 text-lg">
+    <div className="bg-dark-blue-900 flex flex-col gap-2 rounded-xl px-2 py-4 text-base md:text-lg">
       <div className="px-4 py-2">
         <ListSelect
           listSettings={listSettings}

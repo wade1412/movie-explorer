@@ -37,7 +37,7 @@ function SortSelect({ showType, currentSort, onSortChange }) {
           menuList: () => "!p-1",
           option: optionStyle,
           dropdownIndicator: () =>
-            "!text-dark-blue-100 hover:!text-white !cursor-pointer ml-2",
+            "!text-dark-blue-100 hover:!text-white !cursor-pointer ml-2 ",
         }}
       />
 
@@ -45,7 +45,7 @@ function SortSelect({ showType, currentSort, onSortChange }) {
         style={`rounded-2xl px-4 py-2 font-semibold transition-all bg-dark-blue-600 hover:bg-dark-blue-400 cursor-pointer hover:-translate-y-1`}
         text={
           <div
-            className={`flex text-center align-center transition-transform duration-350 text-lg font-light h-fit ${isDesc ? "rotate-180" : "rotate-0"}`}
+            className={`flex text-center align-center transition-transform duration-350 font-light h-fit ${isDesc ? "rotate-180" : "rotate-0"}`}
           >
             👆
           </div>

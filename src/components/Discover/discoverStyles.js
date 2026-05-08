@@ -1,5 +1,5 @@
 export const controlStyle = ({ isFocused }) => `
-          !rounded-xl !p-2 !px-6 !text-lg !transition-color !duration-350
+          !rounded-xl !p-2 !px-6 !text-base !md:text-lg !transition-color !duration-350
           ${isFocused ? "!bg-dark-blue-400" : "!bg-dark-blue-600"}
           `;
 

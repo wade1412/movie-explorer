@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
-import Trending from "../components/TrendingMovies/Trending";
-import MoviesSearch from "../components/MoviesSearch/MoviesSearch";
+import Trending from "../components/HomePage/TrendingMovies/Trending";
 import HomePageList from "../components/HomePage/HomePageList";
+import MoviesSearch from "../components/MoviesSearch/MoviesSearch";
 
 function HomePage() {
   return (

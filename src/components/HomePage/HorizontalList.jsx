@@ -62,10 +62,15 @@ function HorizontalList({ movies, status, errorMessage }) {
           initial="hidden"
           animate="visible"
           exit="exit"
+          className="custom-scroll bg-dark-blue-800 overflow-x-scroll rounded-xl mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] py-4 sm:py-6 lg:py-8"
         >
-          <ul className="">
+          <ul className="flex w-max shrink-0 gap-4">
             {movies.map((movie) => (
-              <motion.li key={movie.id} variants={cardVariants}>
+              <motion.li
+                key={movie.id}
+                variants={cardVariants}
+                className="w-35 shrink-0 sm:w-45 md:w-55 lg:w-62.5"
+              >
                 <MovieCard
                   style="movie-trending-card"
                   id={movie.id}

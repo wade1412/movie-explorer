@@ -1,6 +1,5 @@
 import { Box, Slider, Typography } from "@mui/material";
-import { useDebounce } from "../../hooks/useDebounce";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { sliderSx } from "./discoverStyles";
 
 function ValueSlider({
@@ -11,28 +10,24 @@ function ValueSlider({
   valueRange,
   updateValueRange,
 }) {
-  // Local state
+  // Local State
   const [localValue, setLocalValue] = useState([
     Number(valueRange[0]) || minValue,
     Number(valueRange[1]) || maxValue,
   ]);
 
-  // Debounce
-  const debouncedValue = useDebounce(localValue);
-
-  // Update range in params when debounced value changes
-  useEffect(() => {
-    updateValueRange(debouncedValue);
-  }, [debouncedValue, updateValueRange]);
-
-  const handleChange = useCallback((_, newValue) => {
-    setLocalValue(newValue);
-  }, []);
+  const handleChange = useCallback(
+    (_, newValue) => {
+      updateValueRange(newValue);
+      setLocalValue(newValue);
+    },
+    [updateValueRange],
+  );
 
   return (
     <div className="bg-dark-blue-800/50 flex w-full min-w-50 justify-center gap-4 rounded-2xl border border-dark-blue-600 px-6 md:w-auto">
       <div className="flex w-fit items-center justify-center">
-        <label className="text-lg tracking-wider text-white">{labelText}</label>
+        <label className="tracking-wider text-white">{labelText}</label>
       </div>
 
       <Box
