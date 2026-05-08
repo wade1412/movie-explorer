@@ -17,8 +17,8 @@ const getShowsByParams = async (
       // trending/{movie / tv show}/{time period}
       endpoint = `trending/${showType}/${params}`;
       break;
-    case "getId":
-      // {movie id}
+    case "noApi":
+      // {movie id / list type}
       endpoint = `${showType}/${params}`;
       break;
     case "search":
@@ -65,8 +65,11 @@ export const getTrendingMovies = (showType, timePeriod, signal) => {
   return getShowsByParams("trending", showType, timePeriod, signal);
 };
 
+export const getHomeMoviesList = (listType, signal) =>
+  getShowsByParams("noApi", "movie", listType, signal);
+
 export const getMovieById = async (id, signal = null) =>
-  getShowsByParams("getId", "movie", id, signal);
+  getShowsByParams("noApi", "movie", id, signal);
 
 export const getGenres = async (showType) => {
   const res = await fetch(`${BASE_URL}/genre/${showType}/list?language=en`, {

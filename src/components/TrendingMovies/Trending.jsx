@@ -29,11 +29,11 @@ function Trending() {
         className="w-full px-4 py-6 bg-dark-blue-900 rounded-xl max-w-7xl mx-auto
       "
       >
-        <h2 className="text-center text-xl md:text-2xl lg:text-3xl font-semibold mb-4">
-          Trending movies 🔥
+        <h2 className="text-center text-xl md:text-2xl lg:text-3xl font-semibold mb-2">
+          Trending 🔥
         </h2>
 
-        <div className="flex gap-2 py-4">
+        <div className="flex gap-2 py-2 mb-2">
           <ValueToggle
             value={showType}
             toggleValue={handleShowToggle}

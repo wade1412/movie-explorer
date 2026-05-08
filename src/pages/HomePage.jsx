@@ -2,6 +2,7 @@
 import { motion } from "motion/react";
 import Trending from "../components/TrendingMovies/Trending";
 import MoviesSearch from "../components/MoviesSearch/MoviesSearch";
+import HomePageList from "../components/HomePage/HomePageList";
 
 function HomePage() {
   return (
@@ -11,6 +12,7 @@ function HomePage() {
       animate={{ opacity: 1, y: 0 }}
     >
       <Trending />
+      <HomePageList />
       <MoviesSearch />
     </motion.section>
   );
