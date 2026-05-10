@@ -1,18 +1,20 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
-import Treding from "../components/HomePage/TrendingMovies/Trending";
+import Trending from "../components/HomePage/TrendingMovies/Trending";
 import HomePageList from "../components/HomePage/HomePageList/HomePageList";
 import MoviesSearch from "../components/MoviesSearch/MoviesSearch";
 
 function HomePage() {
   return (
     <motion.section
-      className=" flex flex-col gap-6 py-2 mx-auto"
+      className=" flex flex-col gap-4 py-2 mx-auto"
       initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
     >
       <Trending />
-      <HomePageList />
+      <HomePageList showType="movie" />
+      <HomePageList showType="tv" />
       <MoviesSearch />
     </motion.section>
   );
