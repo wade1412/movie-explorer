@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { getTrendingMovies } from "../services/api";
 
-export const useMoviesSlider = (showType, timePeriod) => {
-  const [movies, setMovies] = useState([]);
+export const useShowsSlider = (showType, timePeriod) => {
+  const [shows, setShows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,7 +24,7 @@ export const useMoviesSlider = (showType, timePeriod) => {
           signal,
         );
 
-        setMovies(trendingRes);
+        setShows(trendingRes);
       } catch (err) {
         if (err.name === "AbortError") return;
 
@@ -58,7 +58,7 @@ export const useMoviesSlider = (showType, timePeriod) => {
   }
 
   return {
-    movies,
+    movies: shows,
     status,
     errorMessage,
   };

@@ -1,6 +1,6 @@
 import { Skeleton } from "@mui/material";
 
-function MovieDetailsSkeleton() {
+function ShowDetailsSkeleton() {
   return (
     <section className="mx-auto max-w-5xl p-6">
       <div className="grid justify-center gap-6 md:grid-cols-2">
@@ -18,4 +18,4 @@ function MovieDetailsSkeleton() {
   );
 }
 
-export default MovieDetailsSkeleton;
+export default ShowDetailsSkeleton;

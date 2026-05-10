@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-function MovieDetailsGenres({ genres }) {
+function ShowDetailsGenres({ genres }) {
   return (
     <div className="flex items-center gap-2 w-full font-semibold">
       Genres:{" "}
@@ -19,4 +19,4 @@ function MovieDetailsGenres({ genres }) {
   );
 }
 
-export default MovieDetailsGenres;
+export default ShowDetailsGenres;

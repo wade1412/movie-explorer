@@ -1,19 +1,19 @@
 import { useParams } from "react-router";
-import { useMovieDetails } from "../hooks/useMovieDetails";
+import { useShowDetails } from "../hooks/useShowDetails";
 import { Skeleton } from "@mui/material";
 import {
   fadeVariants,
   headingClass,
-} from "../components/MoviesList/movieListStyles";
+} from "../components/ShowsList/showListStyles";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
-import MovieDetailsCard from "../components/MovieDetails/MovieDetailsCard";
-import MovieDetailsSkeleton from "../components/MovieDetails/MovieDetailsSkeleton";
+import ShowDetailsSkeleton from "../components/ShowDetails/ShowDetailsSkeleton";
+import ShowDetailsCard from "../components/ShowDetails/ShowDetailsCard";
 
-function MovieDetailsPage() {
-  const { movieId } = useParams();
+function ShowDetailsPage() {
+  const { showType, id } = useParams();
 
-  const { movie, status, errorMessage } = useMovieDetails(movieId);
+  const { show, status, errorMessage } = useShowDetails(showType, id);
 
   return (
     <AnimatePresence mode="wait">
@@ -39,7 +39,7 @@ function MovieDetailsPage() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <MovieDetailsSkeleton />
+          <ShowDetailsSkeleton />
         </motion.div>
       )}
 
@@ -67,11 +67,11 @@ function MovieDetailsPage() {
           animate="visible"
           exit="exit"
         >
-          <MovieDetailsCard movie={movie} />
+          <ShowDetailsCard show={show} showType={showType} />
         </motion.div>
       )}
     </AnimatePresence>
   );
 }
 
-export default MovieDetailsPage;
+export default ShowDetailsPage;

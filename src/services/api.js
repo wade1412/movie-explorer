@@ -45,11 +45,15 @@ const getShowsByParams = async (
     signal,
   });
 
+  console.log(fetchURL);
+
   const data = await res.json();
 
   if (!res.ok) {
     throw new Error(data.message || data.status_message || "Search HTTP error");
   }
+
+  console.log(data);
 
   // For trending movies we dont need pages, return results only
   return apiType === "trending" ? data.results : data;
@@ -68,8 +72,8 @@ export const getTrendingMovies = (showType, timePeriod, signal) => {
 export const getHomeShowsList = (showType, listType, signal) =>
   getShowsByParams("noApi", showType, listType, signal);
 
-export const getMovieById = async (id, signal = null) =>
-  getShowsByParams("noApi", "movie", id, signal);
+export const getShowById = async (showType, id, signal = null) =>
+  getShowsByParams("noApi", showType, id, signal);
 
 export const getGenres = async (showType) => {
   const res = await fetch(`${BASE_URL}/genre/${showType}/list?language=en`, {

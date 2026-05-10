@@ -1,5 +1,5 @@
 import Select from "react-select";
-import ListButton from "../../MoviesList/ListButton";
+import ListButton from "../../ShowsList/ListButton";
 import { controlStyle, menuStyle, optionStyle } from "../discoverStyles";
 import { SORT_OPTIONS } from "./selectOptions";
 

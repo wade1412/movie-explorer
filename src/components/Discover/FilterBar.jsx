@@ -1,7 +1,8 @@
+import ListButton from "../ShowsList/ListButton";
 import ValueToggle from "../ValueToggle";
 import GenreSelect from "./Selects/GenreSelect";
 import SortSelect from "./Selects/SortSelect";
-import ListButton from "../MoviesList/ListButton";
+
 import {
   VOTE_AVERAGE_OPTIONS,
   VOTE_COUNT_OPTIONS,

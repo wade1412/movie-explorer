@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getMovieById } from "../services/api";
+import { getShowById } from "../services/api";
 
-export const useMovieDetails = (id) => {
+export const useShowDetails = (showType, id) => {
   // States for movie, loading, error status
-  const [movie, setMovie] = useState(null);
+  const [show, setShow] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -15,11 +15,11 @@ export const useMovieDetails = (id) => {
         setIsError(false);
         setErrorMessage("");
 
-        const movieDetails = await getMovieById(id);
+        const movieDetails = await getShowById(showType, id);
 
-        setMovie(movieDetails || null);
+        setShow(movieDetails || null);
       } catch (err) {
-        setMovie(null);
+        setShow(null);
         setIsError(true);
         setErrorMessage(err.message || "Something went wrong");
       } finally {
@@ -33,11 +33,11 @@ export const useMovieDetails = (id) => {
   let status;
   if (isLoading) status = "loading";
   else if (isError) status = "error";
-  else if (movie === null) status = "not-found";
+  else if (show === null) status = "not-found";
   else status = "success";
 
   return {
-    movie,
+    show,
     status,
     errorMessage,
   };

@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { useMoviesSlider } from "../../../hooks/useMoviesSlider";
-import MovieCarousel from "./MovieCarousel";
+import { useShowsSlider } from "../../../hooks/useShowsSlider";
+import ShowCarousel from "./ShowCarousel";
 import SkeletonHorizontalList from "./SkeletonHorizotalList";
 import ValueToggle from "../../ValueToggle";
 import { headingStyle, sectionStyle } from "../styles";
@@ -11,10 +11,11 @@ function Trending() {
   const [showType, setShowType] = useState("movie");
   const [timePeriod, setTimePeriod] = useState("day");
 
-  const { movies, status, errorMessage } = useMoviesSlider(
-    showType,
-    timePeriod,
-  );
+  const {
+    movies: shows,
+    status,
+    errorMessage,
+  } = useShowsSlider(showType, timePeriod);
 
   const handleShowToggle = () => {
     setShowType(showType === "movie" ? "tv" : "movie");
@@ -71,14 +72,14 @@ function Trending() {
             </motion.div>
           )}
 
-          {status === "success" && movies?.length > 0 && (
+          {status === "success" && shows?.length > 0 && (
             <motion.div
               key="trending-success"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <MovieCarousel movies={movies} />
+              <ShowCarousel showType={showType} shows={shows} />
             </motion.div>
           )}
         </AnimatePresence>

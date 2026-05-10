@@ -1,5 +1,5 @@
 import { useMoviesSearch } from "../../hooks/useMoviesSearch";
-import MovieList from "../MoviesList/MovieList";
+import ShowsList from "../ShowsList/ShowsList";
 import SearchInput from "./SearchInput";
 
 import { useSearchParams } from "react-router";
@@ -32,7 +32,7 @@ function MoviesSearch() {
   return (
     <>
       <SearchInput searchQuery={query} onChange={handleQueryChange} />
-      <MovieList
+      <ShowsList
         movies={movies}
         page={page}
         totalPages={totalPages}

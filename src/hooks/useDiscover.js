@@ -18,7 +18,7 @@ export const useDiscover = (filters) => {
   const [voteCountGte, voteCountLte] = voteCountRange;
 
   // Data states
-  const [movies, setMovies] = useState([]);
+  const [shows, setShows] = useState([]);
   const [genresList, setGenresList] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -61,13 +61,13 @@ export const useDiscover = (filters) => {
           signal,
         );
 
-        setMovies(results || []);
+        setShows(results || []);
 
         setTotalPages(Math.min(total_pages, MAX_PAGES));
       } catch (err) {
         if (err.name === "AbortError") return;
 
-        setMovies([]);
+        setShows([]);
         setError({
           isError: true,
           message: err.message || "Something went wrong",
@@ -116,7 +116,7 @@ export const useDiscover = (filters) => {
   const status = isLoading ? "loading" : error.isError ? "error" : "success";
 
   return {
-    movies,
+    shows,
     genresList,
     totalPages,
     status,

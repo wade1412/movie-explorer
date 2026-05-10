@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
-import MovieCard from "../MovieCard/MovieCard";
 import SkeletonGrid from "./SkeletonGrid";
 import ListControls from "./ListControls";
 import {
@@ -9,10 +8,12 @@ import {
   gridClass,
   gridVariants,
   headingClass,
-} from "./movieListStyles";
+} from "./showListStyles";
+import ShowCard from "../ShowCard/ShowCard";
 
-function MovieList({
-  movies,
+function ShowsList({
+  shows,
+  showType,
   page,
   totalPages,
   changePageNumber,
@@ -72,9 +73,10 @@ function MovieList({
           exit="exit"
         >
           <ul className={`movie-list-grid ${gridClass} `}>
-            {movies.map((movie) => (
+            {shows.map((movie) => (
               <motion.li key={movie.id} variants={cardVariants}>
-                <MovieCard
+                <ShowCard
+                  showType={showType}
                   style="movie-search-card"
                   id={movie.id}
                   title={movie.title || movie.name}
@@ -85,7 +87,7 @@ function MovieList({
             ))}
           </ul>
 
-          {movies.length > 0 && totalPages > 0 && (
+          {shows.length > 0 && totalPages > 0 && (
             <ListControls
               page={page}
               totalPages={totalPages}
@@ -98,4 +100,4 @@ function MovieList({
   );
 }
 
-export default MovieList;
+export default ShowsList;

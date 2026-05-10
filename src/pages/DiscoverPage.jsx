@@ -1,15 +1,15 @@
 import { useDiscover } from "../hooks/useDiscover";
 import { useFilter } from "../hooks/useFilter";
 import FilterBar from "../components/Discover/FilterBar";
-import MovieList from "../components/MoviesList/MovieList";
+import ShowsList from "../components/ShowsList/ShowsList";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 
-function DiscoverMoviePage() {
+function DiscoverPage() {
   // Get filters from query, join all actions into filterActions obj
   const { filters, ...filterActions } = useFilter();
 
-  const { movies, genresList, totalPages, status, errorMessage } =
+  const { shows, genresList, totalPages, status, errorMessage } =
     useDiscover(filters);
 
   return (
@@ -20,8 +20,9 @@ function DiscoverMoviePage() {
     >
       <FilterBar filters={filters} genresList={genresList} {...filterActions} />
 
-      <MovieList
-        movies={movies}
+      <ShowsList
+        showType={filters.showType}
+        shows={shows}
         page={filters.page}
         totalPages={totalPages}
         changePageNumber={filterActions.updatePage}
@@ -32,4 +33,4 @@ function DiscoverMoviePage() {
   );
 }
 
-export default DiscoverMoviePage;
+export default DiscoverPage;

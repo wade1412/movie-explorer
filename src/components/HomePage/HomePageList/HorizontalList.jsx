@@ -5,11 +5,11 @@ import {
   fadeVariants,
   gridVariants,
   headingClass,
-} from "../../MoviesList/movieListStyles";
-import MovieCard from "../../MovieCard/MovieCard";
+} from "../../ShowsList/showListStyles";
+import ShowCard from "../../ShowCard/ShowCard";
 import SkeletonHorizontalList from "../TrendingMovies/SkeletonHorizotalList";
 
-function HorizontalList({ shows, status, errorMessage }) {
+function HorizontalList({ shows, showType, status, errorMessage }) {
   return (
     <AnimatePresence mode="wait">
       {status === "error" && (
@@ -69,7 +69,8 @@ function HorizontalList({ shows, status, errorMessage }) {
                 variants={cardVariants}
                 className="w-35 shrink-0 sm:w-45 md:w-55 lg:w-62.5"
               >
-                <MovieCard
+                <ShowCard
+                  showType={showType}
                   style="movie-trending-card"
                   id={show.id}
                   title={show.title || show.name}

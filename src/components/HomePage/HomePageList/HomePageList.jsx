@@ -33,6 +33,7 @@ function HomePageList({ showType }) {
       </div>
       <HorizontalList
         shows={shows}
+        showType={showType}
         status={status}
         errorMessage={errorMessage}
       />

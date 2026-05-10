@@ -3,9 +3,9 @@ import { motion, useMotionValue } from "motion/react";
 import { useEffect } from "react";
 import { animate } from "motion";
 import useMeasure from "react-use-measure";
-import MovieCard from "../../MovieCard/MovieCard";
+import ShowCard from "../../ShowCard/ShowCard";
 
-function MovieCarousel({ movies }) {
+function ShowCarousel({ showType, shows }) {
   let [ref, { width }] = useMeasure();
 
   const xTranslation = useMotionValue(0);
@@ -32,12 +32,13 @@ function MovieCarousel({ movies }) {
         ref={ref}
         style={{ x: xTranslation }}
       >
-        {[...movies, ...movies].map((movie, index) => (
+        {[...shows, ...shows].map((movie, index) => (
           <div
             key={`${movie.id}-${index}`}
             className="w-35 shrink-0 sm:w-45 md:w-55 lg:w-62.5"
           >
-            <MovieCard
+            <ShowCard
+              showType={showType}
               style="movie-trending-card"
               id={movie.id}
               title={movie.title || movie.name}
@@ -51,4 +52,4 @@ function MovieCarousel({ movies }) {
   );
 }
 
-export default MovieCarousel;
+export default ShowCarousel;

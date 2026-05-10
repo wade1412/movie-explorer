@@ -4,13 +4,13 @@ import Skeleton from "../Skeletons/SkeletonOverlay";
 import Fallback from "../Skeletons/Fallback";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
-import "./movieCard.css";
+import "./showCard.css";
 
-function MovieCard({ style, title, rating, id, posterPath }) {
+function ShowCard({ showType, style, title, rating, id, posterPath }) {
   const [isImageLoading, setIsImageLoading] = useState(true);
 
   return (
-    <Link to={`/movie/${id}`} className="block h-full">
+    <Link to={`/${showType}/${id}`} className="block h-full">
       <motion.div className={`${style}`}>
         <div className="poster-container p-2 lg:p-4">
           {posterPath ? (
@@ -45,4 +45,4 @@ function MovieCard({ style, title, rating, id, posterPath }) {
   );
 }
 
-export default MovieCard;
+export default ShowCard;
