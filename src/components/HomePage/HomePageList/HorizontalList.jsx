@@ -5,11 +5,11 @@ import {
   fadeVariants,
   gridVariants,
   headingClass,
-} from "../MoviesList/movieListStyles";
-import MovieCard from "../MovieCard/MovieCard";
-import SkeletonHorizontalList from "./TrendingMovies/SkeletonHorizotalList";
+} from "../../MoviesList/movieListStyles";
+import MovieCard from "../../MovieCard/MovieCard";
+import SkeletonHorizontalList from "../TrendingMovies/SkeletonHorizotalList";
 
-function HorizontalList({ movies, status, errorMessage }) {
+function HorizontalList({ shows, status, errorMessage }) {
   return (
     <AnimatePresence mode="wait">
       {status === "error" && (
@@ -34,7 +34,7 @@ function HorizontalList({ movies, status, errorMessage }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <SkeletonHorizontalList style="customer-scroll overflow-x-scroll" />
+          <SkeletonHorizontalList style="custom-scroll overflow-x-scroll" />
         </motion.div>
       )}
 
@@ -55,7 +55,7 @@ function HorizontalList({ movies, status, errorMessage }) {
 
       {status === "success" && (
         <motion.div
-          key={"movies-success"}
+          key={"shows-success"}
           variants={gridVariants}
           initial="hidden"
           animate="visible"
@@ -63,18 +63,18 @@ function HorizontalList({ movies, status, errorMessage }) {
           className="custom-scroll bg-dark-blue-800 overflow-x-scroll rounded-xl mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] py-4 sm:py-6 lg:py-8"
         >
           <ul className="flex w-max shrink-0 gap-4">
-            {movies.map((movie) => (
+            {shows.map((show) => (
               <motion.li
-                key={movie.id}
+                key={show.id}
                 variants={cardVariants}
                 className="w-35 shrink-0 sm:w-45 md:w-55 lg:w-62.5"
               >
                 <MovieCard
                   style="movie-trending-card"
-                  id={movie.id}
-                  title={movie.title || movie.name}
-                  rating={movie.vote_average}
-                  posterPath={movie.poster_path}
+                  id={show.id}
+                  title={show.title || show.name}
+                  rating={show.vote_average}
+                  posterPath={show.poster_path}
                 />
               </motion.li>
             ))}

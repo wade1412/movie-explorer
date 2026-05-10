@@ -65,8 +65,8 @@ export const getTrendingMovies = (showType, timePeriod, signal) => {
   return getShowsByParams("trending", showType, timePeriod, signal);
 };
 
-export const getHomeMoviesList = (listType, signal) =>
-  getShowsByParams("noApi", "movie", listType, signal);
+export const getHomeShowsList = (showType, listType, signal) =>
+  getShowsByParams("noApi", showType, listType, signal);
 
 export const getMovieById = async (id, signal = null) =>
   getShowsByParams("noApi", "movie", id, signal);

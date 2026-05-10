@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDebounce } from "./useDebounce";
-import { getHomeMoviesList } from "../services/api";
+import { getHomeShowsList } from "../services/api";
 
-export const useHomeMoviesList = (listType) => {
-  const [movies, setMovies] = useState([]);
+export const useHomeList = (showType, listType) => {
+  const [shows, setShows] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ isError: false, message: "" });
 
@@ -22,13 +22,17 @@ export const useHomeMoviesList = (listType) => {
         setIsLoading(true);
         setError({ isError: false, message: "" });
 
-        const { results } = await getHomeMoviesList(debouncedListType, signal);
+        const { results } = await getHomeShowsList(
+          showType,
+          debouncedListType,
+          signal,
+        );
 
-        setMovies(results || []);
+        setShows(results || []);
       } catch (err) {
         if (err.name === "AbortError") return;
 
-        setMovies([]);
+        setShows([]);
         setError({
           isError: true,
           message: err.message || "Something went wrong",
@@ -44,7 +48,7 @@ export const useHomeMoviesList = (listType) => {
     return () => {
       controller.abort();
     };
-  }, [debouncedListType]);
+  }, [showType, debouncedListType]);
 
   let status;
   if (isLoading) status = "loading";
@@ -52,7 +56,7 @@ export const useHomeMoviesList = (listType) => {
   else status = "success";
 
   return {
-    movies,
+    shows,
     status,
     errorMessage: error.message,
   };

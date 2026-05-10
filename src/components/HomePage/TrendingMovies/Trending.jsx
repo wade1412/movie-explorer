@@ -5,6 +5,7 @@ import { useMoviesSlider } from "../../../hooks/useMoviesSlider";
 import MovieCarousel from "./MovieCarousel";
 import SkeletonHorizontalList from "./SkeletonHorizotalList";
 import ValueToggle from "../../ValueToggle";
+import { headingStyle, sectionStyle } from "../styles";
 
 function Trending() {
   const [showType, setShowType] = useState("movie");
@@ -25,12 +26,10 @@ function Trending() {
 
   return (
     <>
-      <div className="bg-dark-blue-900 mx-auto w-full rounded-xl px-4 py-6 text-base md:text-lg">
-        <h2 className="mb-2 text-center text-xl font-semibold md:ml-4 md:text-start md:text-2xl lg:text-3xl">
-          Trending 🔥
-        </h2>
+      <div className={sectionStyle}>
+        <h2 className={headingStyle}>Trending 🔥</h2>
 
-        <div className="mb-2 flex flex-col items-center gap-2 py-2 md:flex-row">
+        <div className=" px-4 mb-2 flex flex-col items-center gap-2 py-2 md:flex-row">
           <ValueToggle
             value={showType}
             toggleValue={handleShowToggle}
