@@ -26,16 +26,16 @@ function MovieCarousel({ movies }) {
   }, [xTranslation, width]);
 
   return (
-    <div className="overflow-hidden bg-dark-blue-700 py-4 sm:py-6 lg:py-8 rounded-xl mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+    <div className="bg-dark-blue-800 overflow-hidden rounded-xl mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] py-4 sm:py-6 lg:py-8">
       <motion.div
-        className="flex w-max gap-4 shrink-0"
+        className="flex w-max shrink-0 gap-4"
         ref={ref}
         style={{ x: xTranslation }}
       >
         {[...movies, ...movies].map((movie, index) => (
           <div
             key={`${movie.id}-${index}`}
-            className="shrink-0 w-35 sm:w-45 md:w-55 lg:w-62.5 "
+            className="w-35 shrink-0 sm:w-45 md:w-55 lg:w-62.5"
           >
             <MovieCard
               style="movie-trending-card"

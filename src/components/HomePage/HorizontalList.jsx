@@ -3,12 +3,11 @@ import { AnimatePresence, motion } from "motion/react";
 import {
   cardVariants,
   fadeVariants,
-  gridClass,
   gridVariants,
   headingClass,
 } from "../MoviesList/movieListStyles";
 import MovieCard from "../MovieCard/MovieCard";
-import SkeletonGrid from "../MoviesList/SkeletonGrid";
+import SkeletonHorizontalList from "./TrendingMovies/SkeletonHorizotalList";
 
 function HorizontalList({ movies, status, errorMessage }) {
   return (
@@ -31,12 +30,11 @@ function HorizontalList({ movies, status, errorMessage }) {
       {status === "loading" && (
         <motion.div
           key="loading"
-          className={`${gridClass}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <SkeletonGrid />
+          <SkeletonHorizontalList style="customer-scroll overflow-x-scroll" />
         </motion.div>
       )}
 

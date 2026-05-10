@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { useMoviesSlider } from "../../../hooks/useMoviesSlider";
 import MovieCarousel from "./MovieCarousel";
-import SkeletonTrending from "./SkeletonTrending";
+import SkeletonHorizontalList from "./SkeletonHorizotalList";
 import ValueToggle from "../../ValueToggle";
 
 function Trending() {
@@ -53,7 +53,7 @@ function Trending() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <SkeletonTrending />
+              <SkeletonHorizontalList style="overflow-hidden" />
             </motion.div>
           )}
 
