@@ -15,7 +15,7 @@ function ShowDetailsCard({ show, showType }) {
 
   return (
     <section className="mx-auto p-6">
-      <div className="flex flex-col justify-center gap-4 lg:grid lg:grid-cols-2">
+      <div className="flex flex-col justify-center gap-4 lg:grid lg:grid-cols-2 lg:gap-8">
         {/* -----Poster Div----- */}
         <div className="bg-dark-blue-600 flex aspect-2/3 w-full items-center overflow-hidden rounded-2xl shadow-2xl">
           {data.posterPath ? (

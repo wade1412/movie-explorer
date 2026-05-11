@@ -49,3 +49,17 @@ export const mapShowDetails = (show) => {
     lastAirDate: formatDate(show.last_air_date) || null,
   };
 };
+
+export const getAvatarUrl = (path) => {
+  console.log(path);
+  if (!path) return "";
+
+  // If path has full url and starts with "/" - correct it
+  if (path.includes("http")) {
+    return path.startsWith("/") ? path.slice(1) : path;
+  }
+
+  console.log(`https://tmdb.org${path}`);
+  // On regular path - add tmdb url
+  return `https://image.tmdb.org/t/p/w200/${path}`;
+};
