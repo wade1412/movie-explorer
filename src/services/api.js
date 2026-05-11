@@ -45,15 +45,11 @@ const getShowsByParams = async (
     signal,
   });
 
-  console.log(fetchURL);
-
   const data = await res.json();
 
   if (!res.ok) {
     throw new Error(data.message || data.status_message || "Search HTTP error");
   }
-
-  console.log(data);
 
   // For trending movies we dont need pages, return results only
   return apiType === "trending" ? data.results : data;

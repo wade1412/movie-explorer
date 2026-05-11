@@ -1,49 +1,22 @@
 import { Skeleton } from "@mui/material";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ShowDetailsGenres from "./ShowDetailsGenres";
+import { mapShowDetails } from "./utils";
 
 const detailsStyle = (gapClass = "gap-4") =>
   `bg-dark-blue-900 flex w-full flex-col ${gapClass} rounded-xl px-6 py-4 shadow-lg`;
-
-const formatDate = (date) => {
-  if (!date) {
-    return "Release date unknown";
-  }
-
-  const newDate = new Date(date);
-  let options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  return new Intl.DateTimeFormat("en-US", options).format(newDate);
-};
 
 function ShowDetailsCard({ show, showType }) {
   // Local state for Image loading
   const [isImageLoading, setIsImageLoading] = useState(true);
 
-  // Unified fields
-  const title = show.title || show.name;
-  const originalTitle = show.original_title || show.original_name;
-  const releaseDate = show.release_date || show.first_air_date;
-  const runtime = show.runtime || show.episode_run_time?.[0] || null;
-
-  // Unified arrays
-  const languages = show.spoken_languages || [];
-  const genres = show.genres || [];
-  const productionCompanies = show.production_companies || [];
-  const productionCountries = show.production_countries || [];
-
-  // TV shows don't have budget/revenue
-  const budget = show.budget || null;
-  const revenue = show.revenue || null;
+  const data = useMemo(() => mapShowDetails(show), [show]);
 
   return (
-    <section className="mx-auto max-w-6xl p-6">
-      <div className="grid justify-center gap-6 md:grid-cols-2 ">
-        <div className="bg-dark-blue-600 flex items-center overflow-hidden rounded-2xl shadow-2xl ">
-          {show.poster_path ? (
+    <section className="mx-auto p-6">
+      <div className="flex flex-col justify-center gap-4 lg:grid lg:grid-cols-2">
+        <div className="bg-dark-blue-600 flex aspect-2/3 w-full items-center overflow-hidden rounded-2xl shadow-2xl">
+          {data.posterPath ? (
             <>
               {isImageLoading && <Skeleton animation="wave" />}
 
@@ -53,9 +26,10 @@ function ShowDetailsCard({ show, showType }) {
                   // Avoid flicker on cached images, by using one frame
                   requestAnimationFrame(() => setIsImageLoading(false));
                 }}
-                src={`https://image.tmdb.org/t/p/w500${show.poster_path}`}
+                alt={data.title}
+                src={`https://image.tmdb.org/t/p/w780${show.poster_path}`}
                 loading="lazy"
-                className="movie-details-poster block h-full w-full object-cover"
+                className={`h-full w-full object-cover transition-opacity duration-300 ${isImageLoading ? " opacity-0" : "opacity-100"}`}
               />
             </>
           ) : (
@@ -66,73 +40,95 @@ function ShowDetailsCard({ show, showType }) {
           )}
         </div>
 
-        <div className="flex flex-col gap-4 ">
-          <div className={detailsStyle(1)}>
+        <div className="flex flex-col gap-4">
+          <div className={detailsStyle("gap-1")}>
             <h3 className="text-blue mx-auto text-center text-3xl font-bold">
-              {title}
+              {data.title}
             </h3>
             <p className="mx-auto font-semibold text-cyan-800">
-              {originalTitle}
+              {data.originalTitle}
             </p>
-            <p className="text-light-blush mx-auto italic">{show.tagline}</p>
+            <p className="text-light-blush mx-auto italic">{data.tagline}</p>
           </div>
 
           <div className={detailsStyle()}>
-            <p className="">{show.overview}</p>
+            <p className="">{data.overview}</p>
 
-            <ShowDetailsGenres genres={genres} />
+            <ShowDetailsGenres genres={data.genres} />
           </div>
 
-          <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
-            <div className={`${detailsStyle()}  justify-center`}>
-              {languages && (
+          <div className="flex flex-col gap-4 xl:grid xl:grid-cols-2">
+            <div className={`${detailsStyle()} justify-center`}>
+              {data.languages && (
                 <p>
-                  🌐 Language: <i>{languages.map((l) => l.name).join(", ")}</i>
+                  🌐 Language: <i>{data.languages}</i>
                 </p>
               )}
 
-              <p>
-                📅 Released: <i>{formatDate(releaseDate)}</i>
-              </p>
-
               {showType === "movie" && (
                 <p>
-                  🎬 Runtime: <i>{runtime} minutes</i>
+                  📅 Released: <i>{data.releaseDate ?? "Not available"}</i>
                 </p>
               )}
 
               {showType === "tv" && (
+                <div className="flex flex-col gap-1">
+                  <p>
+                    📅 First air date:{" "}
+                    <i>{data.releaseDate ?? "Not available"}</i>
+                  </p>
+                  <p>
+                    📅 Last air date:{" "}
+                    <i>{data.lastAirDate ?? "Not available"}</i>
+                  </p>
+                </div>
+              )}
+
+              {showType === "movie" && (
                 <p>
-                  📺 Episode runtime: <i>{runtime} minutes</i>
+                  🎬 Runtime: <i>{data.runtime} minutes</i>
                 </p>
               )}
 
-              {budget && budget !== 0 && (
+              {showType === "tv" && (
+                <div className="flex flex-col gap-1">
+                  <span>
+                    📺 Seasons:{" "}
+                    <i>{show.number_of_seasons ?? "Not available"}</i>
+                  </span>
+                  <span>
+                    📺 Episodes:{" "}
+                    <i>{show.number_of_episodes ?? "Not available"}</i>
+                  </span>
+                </div>
+              )}
+
+              {data.budget && (
                 <p>
-                  💰 Budget: <i>{`$${budget.toLocaleString()}`}</i>
+                  💰 Budget: <i>{data.budget}</i>
                 </p>
               )}
 
-              {revenue && revenue !== 0 && (
+              {data.revenue && (
                 <p>
-                  📈 Revenue: <i>{`$${revenue.toLocaleString()}`}</i>
+                  📈 Revenue: <i>{data.revenue}</i>
                 </p>
               )}
             </div>
 
-            <div className={`${detailsStyle()}  justify-center`}>
+            <div className={`${detailsStyle()} justify-center`}>
               <div className="flex flex-col gap-1">
-                <p>Production companies: </p>
-                {productionCompanies.map((c) => (
-                  <span key={c.id} className="font-light ">
+                <p className="font-semibold">Production companies: </p>
+                {data.productionCompanies.map((c) => (
+                  <span key={c.id} className="font-light">
                     {c.name}
                   </span>
                 ))}
               </div>
-              <div>
-                <p>Production countries: </p>
-                {productionCountries.map((c) => (
-                  <span key={c.iso_3166_1} className="font-light ">
+              <div className="flex flex-col gap-1">
+                <p className="font-semibold">Production countries: </p>
+                {data.productionCountries.map((c) => (
+                  <span key={c.iso_3166_1} className="font-light">
                     {c.name}
                   </span>
                 ))}

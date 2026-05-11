@@ -9,15 +9,15 @@ export const useShowDetails = (showType, id) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    const getMovie = async () => {
+    const getShow = async () => {
       try {
         setIsLoading(true);
         setIsError(false);
         setErrorMessage("");
 
-        const movieDetails = await getShowById(showType, id);
+        const showDetails = await getShowById(showType, id);
 
-        setShow(movieDetails || null);
+        setShow(showDetails || null);
       } catch (err) {
         setShow(null);
         setIsError(true);
@@ -27,7 +27,7 @@ export const useShowDetails = (showType, id) => {
       }
     };
 
-    getMovie();
+    getShow();
   }, [id]);
 
   let status;

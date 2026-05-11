@@ -1,6 +1,5 @@
 import { useParams } from "react-router";
 import { useShowDetails } from "../hooks/useShowDetails";
-import { Skeleton } from "@mui/material";
 import {
   fadeVariants,
   headingClass,
@@ -10,6 +9,13 @@ import { AnimatePresence, motion } from "motion/react";
 import ShowDetailsSkeleton from "../components/ShowDetails/ShowDetailsSkeleton";
 import ShowDetailsCard from "../components/ShowDetails/ShowDetailsCard";
 
+const motionProps = {
+  variants: fadeVariants,
+  initial: "hidden",
+  animate: "visible",
+  exit: "exit",
+};
+
 function ShowDetailsPage() {
   const { showType, id } = useParams();
 
@@ -18,14 +24,7 @@ function ShowDetailsPage() {
   return (
     <AnimatePresence mode="wait">
       {status === "error" && (
-        <motion.div
-          key="error"
-          className="w-full"
-          variants={fadeVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-        >
+        <motion.div key="error" className="w-full" {...motionProps}>
           <h2 className={`${headingClass} text-blush`}>
             {errorMessage || "Something went wrong"}
           </h2>
@@ -33,25 +32,13 @@ function ShowDetailsPage() {
       )}
 
       {status === "loading" && (
-        <motion.div
-          key="loading"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
+        <motion.div key="loading" {...motionProps}>
           <ShowDetailsSkeleton />
         </motion.div>
       )}
 
       {status === "not-found" && (
-        <motion.div
-          key="empty"
-          className="w-full"
-          variants={fadeVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-        >
+        <motion.div key="empty" className="w-full" {...motionProps}>
           <h2 className={`${headingClass} text-light-blush`}>
             No movies found
           </h2>
@@ -59,14 +46,7 @@ function ShowDetailsPage() {
       )}
 
       {status === "success" && (
-        <motion.div
-          key="success"
-          className="w-full"
-          variants={fadeVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-        >
+        <motion.div key="success" className="w-full" {...motionProps}>
           <ShowDetailsCard show={show} showType={showType} />
         </motion.div>
       )}
