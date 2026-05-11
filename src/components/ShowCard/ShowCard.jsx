@@ -37,7 +37,7 @@ function ShowCard({ showType, style, title, rating, id, posterPath }) {
         <div className="movie-info flex flex-1 flex-col items-center justify-center gap-2 p-2">
           <p className="movie-title line-clamp-2  font-semibold">{title}</p>
           <p className="movie-rating bg-dark-blue-600 rounded-xl p-2 px-4 text-md font-semibold">
-            {rating === 0 ? "Movie not rated" : ` ⭐ ${rating.toFixed(1)} / 10`}
+            {rating === 0 ? "Movie not rated" : `⭐ ${rating.toFixed(1)} / 10`}
           </p>
         </div>
       </motion.div>

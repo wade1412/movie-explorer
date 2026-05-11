@@ -23,6 +23,8 @@ export const mapShowDetails = (show) => {
     releaseDate: formatDate(show.release_date || show.first_air_date) || null,
     posterPath: show.poster_path,
 
+    voteAverage: show.vote_average || null,
+
     // Arrays
     genres: show.genres || [],
     languages: (show.spoken_languages || []).map((l) => l.name).join(", "),

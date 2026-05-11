@@ -54,7 +54,7 @@ function ShowDetailsCard({ show, showType }) {
           <div className={detailsStyle()}>
             <p className="">{data.overview}</p>
 
-            <ShowDetailsGenres genres={data.genres} />
+            <ShowDetailsGenres genres={data.genres} showType={showType} />
           </div>
 
           <div className="flex flex-col gap-4 xl:grid xl:grid-cols-2">
@@ -103,6 +103,15 @@ function ShowDetailsCard({ show, showType }) {
                 </div>
               )}
 
+              <p>
+                ⭐ Rating:
+                <i>
+                  {data.voteAverage
+                    ? `  ${data.voteAverage.toFixed(1)} / 10`
+                    : "Movie not rated"}
+                </i>
+              </p>
+
               {data.budget && (
                 <p>
                   💰 Budget: <i>{data.budget}</i>
@@ -116,8 +125,10 @@ function ShowDetailsCard({ show, showType }) {
               )}
             </div>
 
-            <div className={`${detailsStyle()} justify-center`}>
-              <div className="flex flex-col gap-1">
+            <div
+              className={`${detailsStyle()} justify-center md:flex-row md:justify-around md:bg-dark-blue-950 md:p-0`}
+            >
+              <div className="flex flex-col gap-1 md:bg-dark-blue-900 md:p-4 md:rounded-xl">
                 <p className="font-semibold">Production companies: </p>
                 {data.productionCompanies.map((c) => (
                   <span key={c.id} className="font-light">
@@ -125,7 +136,7 @@ function ShowDetailsCard({ show, showType }) {
                   </span>
                 ))}
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 md:bg-dark-blue-900 md:p-4 md:rounded-xl">
                 <p className="font-semibold">Production countries: </p>
                 {data.productionCountries.map((c) => (
                   <span key={c.iso_3166_1} className="font-light">
