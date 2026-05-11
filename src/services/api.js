@@ -21,6 +21,11 @@ const getShowsByParams = async (
       // {movie id / list type}
       endpoint = `${showType}/${params}`;
       break;
+    case "reviews":
+      // {showType}/{id}/reviews?{query}
+      endpoint = `${showType}/${params.id}/reviews`;
+      query = `?page=${params.page}`;
+      break;
     case "search":
     case "discover":
       endpoint = `${apiType}/${showType}`;
@@ -70,6 +75,9 @@ export const getHomeShowsList = (showType, listType, signal) =>
 
 export const getShowById = async (showType, id, signal = null) =>
   getShowsByParams("noApi", showType, id, signal);
+
+export const getShowReviews = async (showType, params, signal) =>
+  getShowsByParams("reviews", showType, params, signal);
 
 export const getGenres = async (showType) => {
   const res = await fetch(`${BASE_URL}/genre/${showType}/list?language=en`, {

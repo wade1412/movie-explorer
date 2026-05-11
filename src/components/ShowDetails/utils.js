@@ -15,6 +15,7 @@ const formatDate = (date) => {
 export const mapShowDetails = (show) => {
   return {
     // Main info
+    id: show.id,
     title: show.title || show.name || "Untitled",
     originalTitle: show.original_title || show.original_name,
     tagline: show.tagline || "",
@@ -24,6 +25,8 @@ export const mapShowDetails = (show) => {
     posterPath: show.poster_path,
 
     voteAverage: show.vote_average || null,
+
+    status: show.status || null,
 
     // Arrays
     genres: show.genres || [],

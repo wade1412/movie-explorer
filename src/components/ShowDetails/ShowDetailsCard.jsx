@@ -2,6 +2,7 @@ import { Skeleton } from "@mui/material";
 import { useMemo, useState } from "react";
 import ShowDetailsGenres from "./ShowDetailsGenres";
 import { mapShowDetails } from "./utils";
+import ShowDetailsReviews from "./Reviews/ShowDetailsReviews";
 
 const detailsStyle = (gapClass = "gap-4") =>
   `bg-dark-blue-900 flex w-full flex-col ${gapClass} rounded-xl px-6 py-4 shadow-lg`;
@@ -15,6 +16,7 @@ function ShowDetailsCard({ show, showType }) {
   return (
     <section className="mx-auto p-6">
       <div className="flex flex-col justify-center gap-4 lg:grid lg:grid-cols-2">
+        {/* -----Poster Div----- */}
         <div className="bg-dark-blue-600 flex aspect-2/3 w-full items-center overflow-hidden rounded-2xl shadow-2xl">
           {data.posterPath ? (
             <>
@@ -29,7 +31,7 @@ function ShowDetailsCard({ show, showType }) {
                 alt={data.title}
                 src={`https://image.tmdb.org/t/p/w780${show.poster_path}`}
                 loading="lazy"
-                className={`h-full w-full object-cover transition-opacity duration-300 ${isImageLoading ? " opacity-0" : "opacity-100"}`}
+                className={`movie-details-poster h-full w-full object-cover transition-all duration-300 ${isImageLoading ? " opacity-0" : "opacity-100"}`}
               />
             </>
           ) : (
@@ -40,7 +42,9 @@ function ShowDetailsCard({ show, showType }) {
           )}
         </div>
 
+        {/* -----Show Data Div----- */}
         <div className="flex flex-col gap-4">
+          {/* First row: Title */}
           <div className={detailsStyle("gap-1")}>
             <h3 className="text-blue mx-auto text-center text-3xl font-bold">
               {data.title}
@@ -51,13 +55,15 @@ function ShowDetailsCard({ show, showType }) {
             <p className="text-light-blush mx-auto italic">{data.tagline}</p>
           </div>
 
+          {/* Second row: Overview and Genres */}
           <div className={detailsStyle()}>
             <p className="">{data.overview}</p>
-
             <ShowDetailsGenres genres={data.genres} showType={showType} />
           </div>
 
+          {/* Third row: Additional Info*/}
           <div className="flex flex-col gap-4 xl:grid xl:grid-cols-2">
+            {/* Left Box: Language, Release, Runtime, Budget, Status */}
             <div className={`${detailsStyle()} justify-center`}>
               {data.languages && (
                 <p>
@@ -112,6 +118,13 @@ function ShowDetailsCard({ show, showType }) {
                 </i>
               </p>
 
+              {data.status && (
+                <p>
+                  🍿 Status:
+                  <i> {data.status}</i>
+                </p>
+              )}
+
               {data.budget && (
                 <p>
                   💰 Budget: <i>{data.budget}</i>
@@ -125,10 +138,9 @@ function ShowDetailsCard({ show, showType }) {
               )}
             </div>
 
-            <div
-              className={`${detailsStyle()} justify-center md:flex-row md:justify-around md:bg-dark-blue-950 md:p-0`}
-            >
-              <div className="flex flex-col gap-1 md:bg-dark-blue-900 md:p-4 md:rounded-xl">
+            {/* Right Box: Production companies and countries */}
+            <div className="flex flex-col gap-4 md:flex-row">
+              <div className="flex flex-col gap-1 bg-dark-blue-900 p-4 rounded-xl md:flex-2/3">
                 <p className="font-semibold">Production companies: </p>
                 {data.productionCompanies.map((c) => (
                   <span key={c.id} className="font-light">
@@ -136,7 +148,7 @@ function ShowDetailsCard({ show, showType }) {
                   </span>
                 ))}
               </div>
-              <div className="flex flex-col gap-1 md:bg-dark-blue-900 md:p-4 md:rounded-xl">
+              <div className="flex flex-col gap-1 bg-dark-blue-900 p-4 rounded-xl md:flex-1/3">
                 <p className="font-semibold">Production countries: </p>
                 {data.productionCountries.map((c) => (
                   <span key={c.iso_3166_1} className="font-light">
@@ -146,6 +158,9 @@ function ShowDetailsCard({ show, showType }) {
               </div>
             </div>
           </div>
+
+          {/* Fourth row: Reviews */}
+          <ShowDetailsReviews showType={showType} id={data.id} />
         </div>
       </div>
     </section>
