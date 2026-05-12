@@ -61,86 +61,83 @@ function ShowDetailsCard({ show, showType }) {
             <ShowDetailsGenres genres={data.genres} showType={showType} />
           </div>
 
-          {/* Third row: Additional Info*/}
-          <div className="flex flex-col gap-4 xl:grid xl:grid-cols-2">
-            {/* Left Box: Language, Release, Runtime, Budget, Status */}
-            <div className={`${detailsStyle()} justify-center`}>
-              {data.languages && (
-                <p>
-                  🌐 Language: <i>{data.languages}</i>
-                </p>
-              )}
-
-              {showType === "movie" && (
-                <p>
-                  📅 Released: <i>{data.releaseDate ?? "Not available"}</i>
-                </p>
-              )}
-
-              {showType === "tv" && (
-                <div className="flex flex-col gap-1">
-                  <p>
-                    📅 First air date:{" "}
-                    <i>{data.releaseDate ?? "Not available"}</i>
-                  </p>
-                  <p>
-                    📅 Last air date:{" "}
-                    <i>{data.lastAirDate ?? "Not available"}</i>
-                  </p>
-                </div>
-              )}
-
-              {showType === "movie" && (
-                <p>
-                  🎬 Runtime: <i>{data.runtime} minutes</i>
-                </p>
-              )}
-
-              {showType === "tv" && (
-                <div className="flex flex-col gap-1">
-                  <span>
-                    📺 Seasons:{" "}
-                    <i>{show.number_of_seasons ?? "Not available"}</i>
-                  </span>
-                  <span>
-                    📺 Episodes:{" "}
-                    <i>{show.number_of_episodes ?? "Not available"}</i>
-                  </span>
-                </div>
-              )}
-
+          {/* Third row: Language, Release, Runtime, Budget, Status */}
+          <div className={`${detailsStyle()} justify-center`}>
+            {data.languages && (
               <p>
-                ⭐ Rating:
-                <i>
-                  {data.voteAverage
-                    ? `  ${data.voteAverage.toFixed(1)} / 10`
-                    : "Movie not rated"}
-                </i>
+                🌐 Language: <i>{data.languages}</i>
               </p>
+            )}
 
-              {data.status && (
+            {showType === "movie" && (
+              <p>
+                📅 Released: <i>{data.releaseDate ?? "Not available"}</i>
+              </p>
+            )}
+
+            {showType === "tv" && (
+              <div className="flex flex-col gap-1">
                 <p>
-                  🍿 Status:
-                  <i> {data.status}</i>
+                  📅 First air date:{" "}
+                  <i>{data.releaseDate ?? "Not available"}</i>
                 </p>
-              )}
-
-              {data.budget && (
                 <p>
-                  💰 Budget: <i>{data.budget}</i>
+                  📅 Last air date: <i>{data.lastAirDate ?? "Not available"}</i>
                 </p>
-              )}
+              </div>
+            )}
 
-              {data.revenue && (
-                <p>
-                  📈 Revenue: <i>{data.revenue}</i>
-                </p>
-              )}
-            </div>
+            {showType === "movie" && (
+              <p>
+                🎬 Runtime: <i>{data.runtime} minutes</i>
+              </p>
+            )}
 
-            {/* Right Box: Production companies and countries */}
+            {showType === "tv" && (
+              <div className="flex flex-col gap-1">
+                <span>
+                  📺 Seasons: <i>{show.number_of_seasons ?? "Not available"}</i>
+                </span>
+                <span>
+                  📺 Episodes:{" "}
+                  <i>{show.number_of_episodes ?? "Not available"}</i>
+                </span>
+              </div>
+            )}
+
+            <p>
+              ⭐ Rating:
+              <i>
+                {data.voteAverage
+                  ? `  ${data.voteAverage.toFixed(1)} / 10`
+                  : "Movie not rated"}
+              </i>
+            </p>
+
+            {data.status && (
+              <p>
+                🍿 Status:
+                <i> {data.status}</i>
+              </p>
+            )}
+
+            {data.budget && (
+              <p>
+                💰 Budget: <i>{data.budget}</i>
+              </p>
+            )}
+
+            {data.revenue && (
+              <p>
+                📈 Revenue: <i>{data.revenue}</i>
+              </p>
+            )}
+          </div>
+
+          {/* Fourth Row: Production companies and countries */}
+          <div>
             <div className="flex flex-col gap-4 md:flex-row">
-              <div className="flex flex-col gap-1 bg-dark-blue-900 p-4 rounded-xl md:flex-2/3">
+              <div className="bg-dark-blue-900 flex flex-col gap-1 rounded-xl p-4 md:flex-2/3">
                 <p className="font-semibold">Production companies: </p>
                 {data.productionCompanies.map((c) => (
                   <span key={c.id} className="font-light">
@@ -148,7 +145,7 @@ function ShowDetailsCard({ show, showType }) {
                   </span>
                 ))}
               </div>
-              <div className="flex flex-col gap-1 bg-dark-blue-900 p-4 rounded-xl md:flex-1/3">
+              <div className="bg-dark-blue-900 flex flex-col gap-1 rounded-xl p-4 md:flex-1/3">
                 <p className="font-semibold">Production countries: </p>
                 {data.productionCountries.map((c) => (
                   <span key={c.iso_3166_1} className="font-light">
@@ -159,8 +156,11 @@ function ShowDetailsCard({ show, showType }) {
             </div>
           </div>
 
-          {/* Fourth row: Reviews */}
-          <ShowDetailsReviews showType={showType} id={data.id} />
+          {/* Fifth Row: Reviews */}
+          <div className="bg-dark-blue-900 flex flex-col gap-4 rounded-xl px-6 py-4">
+            <h1 className="text-lg md:text-xl">Reviews 🌟 </h1>
+            <ShowDetailsReviews showType={showType} id={data.id} />
+          </div>
         </div>
       </div>
     </section>

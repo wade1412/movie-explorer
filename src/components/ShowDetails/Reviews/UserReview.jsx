@@ -1,23 +1,8 @@
 import { Avatar, Rating } from "@mui/material";
 import { getAvatarUrl } from "../utils";
 
-function UserReview({ reviewData }) {
-  //    {
-  //       "author": "Goddard",
-  //       "author_details": {
-  //         "name": "",
-  //         "username": "Goddard",
-  //         "avatar_path": "/https://secure.gravatar.com/avatar/f248ec34f953bc62cafcbdd81fddd6b6.jpg",
-  //         "rating": null
-  //       },
-  //       "content": "Pretty awesome movie.  It shows what one crazy person can convince other crazy people to do.  Everyone needs something to believe in.  I recommend Jesus Christ, but they want Tyler Durden.",
-  //       "created_at": "2018-06-09T17:51:53.359Z",
-  //       "id": "5b1c13b9c3a36848f2026384",
-  //       "updated_at": "2021-06-23T15:58:09.421Z",
-  //       "url": "https://www.themoviedb.org/review/5b1c13b9c3a36848f2026384"
-  //     },
-
-  const { author_details, content } = reviewData;
+function UserReview({ reviewData, isSelected, handleReviewClick }) {
+  const { author_details, content, id } = reviewData;
   const { name, username, avatar_path, rating } = author_details || {};
 
   const avatarSrc = getAvatarUrl(avatar_path);
@@ -26,32 +11,52 @@ function UserReview({ reviewData }) {
   const firstLetter = displayName.charAt(0).toUpperCase();
 
   return (
-    <div className="flex flex-col gap-4 p-2">
-      {/* Avatar and Name */}
-      <div className="flex w-full flex-row gap-4 items-center font-semibold">
+    <div
+      className={`flex w-full flex-col rounded-2xl p-2 transition-all duration-300 ${isSelected ? "bg-dark-blue-600 col-span-full gap-4 overflow-y-visible" : "bg-dark-blue-800 col-span-1 max-h-50 gap-2"} `}
+      onClick={() => handleReviewClick(id)}
+    >
+      {/* Main Row: User Info and Rating*/}
+      <div
+        className={`flex w-full flex-row items-center rounded-2xl px-2 font-semibold ${isSelected ? "bg-dark-blue-800 py-2" : "bg-dark-blue-600 py-1"}`}
+      >
+        {/* Avatar picture or first letter of the username */}
         {avatarSrc ? (
           <Avatar alt={displayName} src={avatarSrc} />
         ) : (
           <Avatar alt={displayName}>{firstLetter}</Avatar>
         )}
-        <p>{reviewData.author}</p>
-        <div className="flex justify-end flex-1">
-          <Rating
-            value={(rating / 2).toFixed(1)}
-            sx={{
-              "& .MuiRating-iconFilled": {
-                color: "oklch(87.9% 0.169 91.605)",
-              },
-              "& .MuiRating-iconEmpty": {
-                color: "#eeeeee",
-              },
-            }}
-            readOnly
-          />
+        {/* Username and Rating */}
+        <div className="flex w-full flex-col items-center justify-center gap-1">
+          <p>{reviewData.author}</p>
+          <div
+            className={`flex gap-1 ${isSelected ? "bg-dark-blue-800 w-fit justify-end rounded-xl py-1 lg:px-6" : ""}`}
+          >
+            {rating ? (
+              <Rating
+                value={(rating / 2).toFixed(1)}
+                sx={{
+                  "& .MuiRating-iconFilled": {
+                    color: "oklch(87.9% 0.169 91.605)",
+                  },
+                  "& .MuiRating-iconEmpty": {
+                    color: "#eeeeee",
+                  },
+                }}
+                readOnly
+              />
+            ) : (
+              <p className="font-light italic">Not rated</p>
+            )}
+          </div>
         </div>
       </div>
 
-      <p>{content}</p>
+      {/* Review content */}
+      <p
+        className={`px-2 py-1 font-light ${!isSelected ? "line-clamp-2" : ""}`}
+      >
+        {content}
+      </p>
     </div>
   );
 }
