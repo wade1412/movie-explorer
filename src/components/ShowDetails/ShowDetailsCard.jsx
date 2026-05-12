@@ -157,8 +157,8 @@ function ShowDetailsCard({ show, showType }) {
           </div>
 
           {/* Fifth Row: Reviews */}
-          <div className="bg-dark-blue-900 flex flex-col gap-4 rounded-xl px-6 py-4">
-            <h1 className="text-lg md:text-xl">Reviews 🌟 </h1>
+          <div className="bg-dark-blue-900 flex flex-col gap-4 rounded-xl p-4 px-3">
+            <h1 className="px-3 text-lg md:text-xl">Reviews 🌟 </h1>
             <ShowDetailsReviews showType={showType} id={data.id} />
           </div>
         </div>

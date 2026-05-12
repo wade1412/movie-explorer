@@ -1,3 +1,5 @@
+import { fadeVariants } from "../ShowsList/showListStyles";
+
 const formatDate = (date) => {
   if (!date) {
     return "Release date unknown";
@@ -51,7 +53,6 @@ export const mapShowDetails = (show) => {
 };
 
 export const getAvatarUrl = (path) => {
-  console.log(path);
   if (!path) return "";
 
   // If path has full url and starts with "/" - correct it
@@ -59,7 +60,13 @@ export const getAvatarUrl = (path) => {
     return path.startsWith("/") ? path.slice(1) : path;
   }
 
-  console.log(`https://tmdb.org${path}`);
   // On regular path - add tmdb url
   return `https://image.tmdb.org/t/p/w200/${path}`;
+};
+
+export const motionProps = {
+  variants: fadeVariants,
+  initial: "hidden",
+  animate: "visible",
+  exit: "exit",
 };

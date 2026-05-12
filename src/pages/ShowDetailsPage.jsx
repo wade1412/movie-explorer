@@ -1,20 +1,11 @@
 import { useParams } from "react-router";
 import { useShowDetails } from "../hooks/useShowDetails";
-import {
-  fadeVariants,
-  headingClass,
-} from "../components/ShowsList/showListStyles";
+import { headingClass } from "../components/ShowsList/showListStyles";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
 import ShowDetailsSkeleton from "../components/ShowDetails/ShowDetailsSkeleton";
 import ShowDetailsCard from "../components/ShowDetails/ShowDetailsCard";
-
-const motionProps = {
-  variants: fadeVariants,
-  initial: "hidden",
-  animate: "visible",
-  exit: "exit",
-};
+import { motionProps } from "../components/ShowDetails/utils";
 
 function ShowDetailsPage() {
   const { showType, id } = useParams();

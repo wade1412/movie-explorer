@@ -12,7 +12,7 @@ function UserReview({ reviewData, isSelected, handleReviewClick }) {
 
   return (
     <div
-      className={`flex w-full flex-col rounded-2xl p-2 transition-all duration-300 ${isSelected ? "bg-dark-blue-600 col-span-full gap-4 overflow-y-visible" : "bg-dark-blue-800 col-span-1 max-h-50 gap-2"} `}
+      className={`flex flex-col rounded-2xl p-2 transition-all duration-300 ${isSelected ? "bg-dark-blue-600 w-full gap-4 overflow-y-visible" : "bg-dark-blue-800 w-full xl:w-[calc(50%---spacing(2))] max-h-50 gap-2"} `}
       onClick={() => handleReviewClick(id)}
     >
       {/* Main Row: User Info and Rating*/}
@@ -26,8 +26,8 @@ function UserReview({ reviewData, isSelected, handleReviewClick }) {
           <Avatar alt={displayName}>{firstLetter}</Avatar>
         )}
         {/* Username and Rating */}
-        <div className="flex w-full flex-col items-center justify-center gap-1">
-          <p>{reviewData.author}</p>
+        <div className="flex w-full flex-col items-center justify-center gap-1 overflow-hidden">
+          <p className="text-center">{reviewData.author}</p>
           <div
             className={`flex gap-1 ${isSelected ? "bg-dark-blue-800 w-fit justify-end rounded-xl py-1 lg:px-6" : ""}`}
           >
