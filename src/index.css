@@ -28,20 +28,33 @@ html {
   background-color: var(--color-dark-blue-950);
 }
 
-.custom-scroll::-webkit-scrollbar {
+.custom-horizontal-scroll::-webkit-scrollbar {
   width: 10px;
 }
-
-.custom-scroll::-webkit-scrollbar-track {
+.custom-horizontal-scroll::-webkit-scrollbar-track {
   background: var(--color-dark-blue-600);
 }
-.custom-scroll::-webkit-scrollbar-thumb {
+.custom-horizontal-scroll::-webkit-scrollbar-thumb {
   background: var(--color-dark-blue-300);
   border-radius: 1rem;
 }
-
 /* Thumb on hover */
-.custom-scroll::-webkit-scrollbar-thumb:hover {
+.custom-horizontal-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-dark-blue-200);
+}
+
+/* Custom Vertical Scroll */
+.custom-vertical-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.custom-vertical-scroll::-webkit-scrollbar-track {
+  background: var(--color-dark-blue-600);
+}
+.custom-vertical-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-dark-blue-300);
+  border-radius: 1rem;
+}
+.custom-vertical-scroll::-webkit-scrollbar-thumb:hover {
   background: var(--color-dark-blue-200);
 }
 

@@ -34,7 +34,7 @@ function HorizontalList({ shows, showType, status, errorMessage }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <SkeletonHorizontalList style="custom-scroll overflow-x-scroll" />
+          <SkeletonHorizontalList style="custom-horizontal-scroll overflow-x-scroll" />
         </motion.div>
       )}
 
@@ -60,7 +60,7 @@ function HorizontalList({ shows, showType, status, errorMessage }) {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="custom-scroll bg-dark-blue-800 overflow-x-scroll rounded-xl mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] py-4 sm:py-6 lg:py-8"
+          className="custom-horizontal-scroll bg-dark-blue-800 overflow-x-scroll rounded-xl mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] py-4 sm:py-6 lg:py-8"
         >
           <ul className="flex w-max shrink-0 gap-4">
             {shows.map((show) => (

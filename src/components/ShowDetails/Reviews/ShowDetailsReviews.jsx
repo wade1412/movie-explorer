@@ -6,6 +6,7 @@ import { headingClass } from "../../ShowsList/showListStyles";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
 import SkeletonReviewList from "./SkeletonReviewList";
+import ReviewListControls from "./ReviewListControls";
 
 function ShowDetailsReviews({ showType, id }) {
   const [page, setPage] = useState(1);
@@ -15,6 +16,11 @@ function ShowDetailsReviews({ showType, id }) {
     id,
     page,
   );
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+    setSelectedReviewId(null);
+  };
 
   const handleReviewClick = (newId) => {
     setSelectedReviewId(selectedReviewId === newId ? null : newId);
@@ -45,26 +51,32 @@ function ShowDetailsReviews({ showType, id }) {
       )}
 
       {status === "success" && (
-        <motion.div
-          key="success"
-          className="h-fit max-h-125 overflow-y-auto pr-2"
-          {...motionProps}
-        >
-          {status === "success" && reviews.length > 0 ? (
-            <div className="flex flex-wrap gap-4">
-              {reviews.map((r) => (
-                <UserReview
-                  key={r.id}
-                  reviewData={r}
-                  isSelected={selectedReviewId === r.id}
-                  handleReviewClick={handleReviewClick}
-                />
-              ))}
+        <motion.div key="success" {...motionProps}>
+          {reviews.length > 0 ? (
+            <div className="h-fit max-h-125 overflow-y-auto custom-vertical-scroll  pr-2">
+              <div className="flex flex-wrap gap-4">
+                {reviews.map((r) => (
+                  <UserReview
+                    key={r.id}
+                    reviewData={r}
+                    isSelected={selectedReviewId === r.id}
+                    handleReviewClick={handleReviewClick}
+                  />
+                ))}
+              </div>
             </div>
           ) : (
             <div className="bg-dark-blue-600 flex rounded-xl px-4 py-2 text-lg font-light text-white italic">
               No reviews yet
             </div>
+          )}
+
+          {totalPages > 1 && (
+            <ReviewListControls
+              page={page}
+              totalPages={totalPages}
+              handlePageChange={handlePageChange}
+            />
           )}
         </motion.div>
       )}
