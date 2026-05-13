@@ -53,7 +53,7 @@ function ShowDetailsReviews({ showType, id }) {
       {status === "success" && (
         <motion.div key="success" {...motionProps}>
           {reviews.length > 0 ? (
-            <div className="h-fit max-h-125 overflow-y-auto custom-vertical-scroll  pr-2">
+            <div className="h-fit max-h-125 overflow-y-auto custom-vertical-scroll px-2">
               <div className="flex flex-wrap gap-4">
                 {reviews.map((r) => (
                   <UserReview

@@ -1,13 +1,13 @@
 import SkeletonReview from "./SkeletonReview";
 
+const skeletonArray = Array.from({ length: 4 });
+
 function SkeletonReviewList() {
   return (
     <>
-      {Array.from(
-        { length: 4 }.map((_, index) => (
-          <SkeletonReview key={`skeleton-review-${index}`} />
-        )),
-      )}
+      {skeletonArray.map((_, index) => (
+        <SkeletonReview key={`skeleton-review-${index}`} />
+      ))}
     </>
   );
 }

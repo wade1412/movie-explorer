@@ -26,6 +26,10 @@ const getShowsByParams = async (
       endpoint = `${showType}/${params.id}/reviews`;
       query = `?page=${params.page}`;
       break;
+    case "recommendations":
+      endpoint = `${showType}/${params}/recommendations`;
+      query = "";
+      break;
     case "search":
     case "discover":
       endpoint = `${apiType}/${showType}`;
@@ -78,6 +82,9 @@ export const getShowById = async (showType, id, signal = null) =>
 
 export const getShowReviews = async (showType, params, signal) =>
   getShowsByParams("reviews", showType, params, signal);
+
+export const getShowRecommendations = async (showType, id, signal) =>
+  getShowsByParams("recommendations", showType, id, signal);
 
 export const getGenres = async (showType) => {
   const res = await fetch(`${BASE_URL}/genre/${showType}/list?language=en`, {

@@ -1,8 +1,10 @@
 import { Skeleton } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ShowDetailsGenres from "./ShowDetailsGenres";
 import { mapShowDetails } from "./utils";
 import ShowDetailsReviews from "./Reviews/ShowDetailsReviews";
+import ShowDetailsRecommendations from "./Recommendations/ShowDetailsRecommendations";
+import ShowDetailsMetaInfo from "./ShowDetailsMetaInfo";
 
 const detailsStyle = (gapClass = "gap-4") =>
   `bg-dark-blue-900 flex w-full flex-col ${gapClass} rounded-xl px-6 py-4 shadow-lg`;
@@ -12,6 +14,9 @@ function ShowDetailsCard({ show, showType }) {
   const [isImageLoading, setIsImageLoading] = useState(true);
 
   const data = useMemo(() => mapShowDetails(show), [show]);
+
+  // Scroll to top of the page on the show change
+  useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), [show]);
 
   return (
     <section className="mx-auto p-6">
@@ -57,110 +62,25 @@ function ShowDetailsCard({ show, showType }) {
 
           {/* Second row: Overview and Genres */}
           <div className={detailsStyle()}>
-            <p className="">{data.overview}</p>
+            <p>{data.overview}</p>
             <ShowDetailsGenres genres={data.genres} showType={showType} />
           </div>
 
-          {/* Third row: Language, Release, Runtime, Budget, Status */}
-          <div className={`${detailsStyle()} justify-center`}>
-            {data.languages && (
-              <p>
-                🌐 Language: <i>{data.languages}</i>
-              </p>
-            )}
+          <ShowDetailsMetaInfo showType={showType} data={data} />
+        </div>
 
-            {showType === "movie" && (
-              <p>
-                📅 Released: <i>{data.releaseDate ?? "Not available"}</i>
-              </p>
-            )}
+        {/* Fifth Row: Reviews */}
+        <div className="bg-dark-blue-900 flex flex-col gap-4 rounded-xl py-4 lg:col-span-2">
+          <h2 className="px-4 text-lg md:text-xl">Reviews 🌟 </h2>
+          <ShowDetailsReviews showType={showType} id={data.id} />
+        </div>
 
-            {showType === "tv" && (
-              <div className="flex flex-col gap-1">
-                <p>
-                  📅 First air date:{" "}
-                  <i>{data.releaseDate ?? "Not available"}</i>
-                </p>
-                <p>
-                  📅 Last air date: <i>{data.lastAirDate ?? "Not available"}</i>
-                </p>
-              </div>
-            )}
-
-            {showType === "movie" && (
-              <p>
-                🎬 Runtime: <i>{data.runtime} minutes</i>
-              </p>
-            )}
-
-            {showType === "tv" && (
-              <div className="flex flex-col gap-1">
-                <span>
-                  📺 Seasons: <i>{show.number_of_seasons ?? "Not available"}</i>
-                </span>
-                <span>
-                  📺 Episodes:{" "}
-                  <i>{show.number_of_episodes ?? "Not available"}</i>
-                </span>
-              </div>
-            )}
-
-            <p>
-              ⭐ Rating:
-              <i>
-                {data.voteAverage
-                  ? `  ${data.voteAverage.toFixed(1)} / 10`
-                  : "Movie not rated"}
-              </i>
-            </p>
-
-            {data.status && (
-              <p>
-                🍿 Status:
-                <i> {data.status}</i>
-              </p>
-            )}
-
-            {data.budget && (
-              <p>
-                💰 Budget: <i>{data.budget}</i>
-              </p>
-            )}
-
-            {data.revenue && (
-              <p>
-                📈 Revenue: <i>{data.revenue}</i>
-              </p>
-            )}
-          </div>
-
-          {/* Fourth Row: Production companies and countries */}
-          <div>
-            <div className="flex flex-col gap-4 md:flex-row">
-              <div className="bg-dark-blue-900 flex flex-col gap-1 rounded-xl p-4 md:flex-2/3">
-                <p className="font-semibold">Production companies: </p>
-                {data.productionCompanies.map((c) => (
-                  <span key={c.id} className="font-light">
-                    {c.name}
-                  </span>
-                ))}
-              </div>
-              <div className="bg-dark-blue-900 flex flex-col gap-1 rounded-xl p-4 md:flex-1/3">
-                <p className="font-semibold">Production countries: </p>
-                {data.productionCountries.map((c) => (
-                  <span key={c.iso_3166_1} className="font-light">
-                    {c.name}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Fifth Row: Reviews */}
-          <div className="bg-dark-blue-900 flex flex-col gap-4 rounded-xl p-4 px-3">
-            <h1 className="px-3 text-lg md:text-xl">Reviews 🌟 </h1>
-            <ShowDetailsReviews showType={showType} id={data.id} />
-          </div>
+        {/* Last Row: Recommendations */}
+        <div className="bg-dark-blue-900 flex flex-col gap-4 rounded-xl p-4 px-3 lg:col-span-2">
+          <h2 className="px-3 text-lg md:text-xl font-semibold">
+            More Like This {showType === "movie" ? "🎬" : "📺"}{" "}
+          </h2>
+          <ShowDetailsRecommendations showType={showType} id={data.id} />
         </div>
       </div>
     </section>

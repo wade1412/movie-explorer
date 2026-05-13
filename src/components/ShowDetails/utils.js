@@ -49,6 +49,8 @@ export const mapShowDetails = (show) => {
 
     // Specific for TV
     lastAirDate: formatDate(show.last_air_date) || null,
+    episodes: show.number_of_episodes || null,
+    seasons: show.number_of_seasons || null,
   };
 };
 
