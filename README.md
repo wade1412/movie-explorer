@@ -2,6 +2,10 @@
 
 A personal learning project built to practice React and modern frontend development. The app allows users to search for movies and TV shows, view detailed information, read reviews, and browse recommendations — powered by the TMDB API.
 
+## 🔗 Live Demo
+
+[movie-explorer-gamma-nine.vercel.app](https://movie-explorer-gamma-nine.vercel.app/)
+
 ## About
 
 This is a self-directed learning project, not a production application. The goal is to practice building real-world UI with React, custom hooks, routing, and component architecture.
