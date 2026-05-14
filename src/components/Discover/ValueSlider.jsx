@@ -1,5 +1,5 @@
 import { Box, debounce, Slider, Typography } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { sliderSx } from "./discoverStyles";
 
 function ValueSlider({
@@ -21,6 +21,12 @@ function ValueSlider({
     () => debounce((val) => updateValueRange(val), 300),
     [updateValueRange],
   );
+
+  useEffect(() => {
+    if (valueRange[0] === "" && valueRange[1] === "") {
+      setLocalValue([minValue, maxValue]);
+    }
+  }, [valueRange]);
 
   const handleChange = (_, newValue) => {
     setLocalValue(newValue);

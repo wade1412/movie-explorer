@@ -50,7 +50,6 @@ function FilterBar({
       <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-end position-center">
           <ValueSlider
-            key={`voteAverage-${voteAverageRange[0]}${voteAverageRange[1]}`}
             labelText="Rating"
             minValue={0}
             maxValue={10}
@@ -59,7 +58,6 @@ function FilterBar({
             updateValueRange={updateVoteAverageRange}
           />
           <ValueSlider
-            key={`voteCount-${voteCountRange[0]}${voteCountRange[1]}`}
             labelText="Votes"
             minValue={0}
             maxValue={40000}
