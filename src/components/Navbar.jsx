@@ -39,7 +39,7 @@ function Navbar() {
 
   return (
     <motion.nav
-      className="flex flex-col gap-4 md:flex-row items-center justify-between px-8 py-4 mx-auto max-w-5xl backdrop-blur-md bg-dark-blue-700/80 rounded-b-2xl shadow-xl shadow-black/10 text-lg"
+      className="flex flex-col gap-4 md:flex-row items-center justify-between px-8 py-4 mx-auto max-w-5xl backdrop-blur-md bg-dark-blue-800/80 rounded-b-2xl shadow-xl shadow-black/10 text-lg"
       variants={navbarVariants}
       animate="visible"
       initial="hidden"

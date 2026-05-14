@@ -67,11 +67,3 @@ html {
     transform: scale(1.05);
   }
 }
-
-.nav-item {
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: var(--color-light-blush);
-  }
-}

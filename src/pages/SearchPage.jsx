@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
-import ShowSearch from "../components/MoviesSearch/ShowSearch";
+import ShowSearch from "../components/ShowSearch/ShowSearch";
 import { useState } from "react";
 
 function SearchPage() {
