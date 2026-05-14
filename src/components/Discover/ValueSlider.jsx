@@ -1,5 +1,5 @@
-import { Box, Slider, Typography } from "@mui/material";
-import { useCallback, useState } from "react";
+import { Box, debounce, Slider, Typography } from "@mui/material";
+import { useMemo, useState } from "react";
 import { sliderSx } from "./discoverStyles";
 
 function ValueSlider({
@@ -12,17 +12,20 @@ function ValueSlider({
 }) {
   // Local State
   const [localValue, setLocalValue] = useState([
-    Number(valueRange[0]) || minValue,
-    Number(valueRange[1]) || maxValue,
+    valueRange[0] || minValue,
+    valueRange[1] || maxValue,
   ]);
 
-  const handleChange = useCallback(
-    (_, newValue) => {
-      updateValueRange(newValue);
-      setLocalValue(newValue);
-    },
+  // Debounced update of the URL
+  const debouncedUpdate = useMemo(
+    () => debounce((val) => updateValueRange(val), 300),
     [updateValueRange],
   );
+
+  const handleChange = (_, newValue) => {
+    setLocalValue(newValue);
+    debouncedUpdate(newValue);
+  };
 
   return (
     <div className="bg-dark-blue-800/50 flex w-full min-w-50 justify-center gap-4 rounded-2xl border border-dark-blue-600 px-6 md:w-auto">

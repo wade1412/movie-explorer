@@ -19,7 +19,7 @@ function GenreSelect({
   );
 
   const selectedValues = useMemo(() => {
-    if (!selectedGenres) return;
+    if (!selectedGenres) return [];
 
     const selectedSet = new Set(selectedGenres.split(","));
     return options.filter((opt) => selectedSet.has(String(opt.value)));

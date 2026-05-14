@@ -1,4 +1,3 @@
-import { debounce } from "@mui/material";
 import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router";
 
@@ -100,29 +99,22 @@ export const useFilter = () => {
     [setFilterParams],
   );
 
-  const updateVoteAverageRange = useMemo(
-    () =>
-      debounce((voteAverageRange) => {
-        updateVotes("vote_average.gte", "vote_average.lte", voteAverageRange);
-      }, 300),
+  const updateVoteAverageRange = useCallback(
+    (voteAverageRange) =>
+      updateVotes("vote_average.gte", "vote_average.lte", voteAverageRange),
     [updateVotes],
   );
 
-  const updateVoteCountRange = useMemo(
-    () =>
-      debounce((voteCountRange) => {
-        updateVotes("vote_count.gte", "vote_count.lte", voteCountRange);
-      }, 300),
+  const updateVoteCountRange = useCallback(
+    (voteCountRange) => {
+      updateVotes("vote_count.gte", "vote_count.lte", voteCountRange);
+    },
     [updateVotes],
   );
 
   //Clear filters to default state
   const clearFilters = useCallback(() => {
-    setFilterParams({
-      showType: "movie",
-      sort_by: "popularity.desc",
-      page: "1",
-    });
+    setFilterParams({});
   }, [setFilterParams]);
 
   return {
