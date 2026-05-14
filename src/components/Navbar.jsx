@@ -52,6 +52,15 @@ function Navbar() {
           Discover
         </Link>
       </motion.li>
+      <motion.li
+        variants={childVariants}
+        className="nav-item"
+        whileHover={{ y: -3 }}
+      >
+        <Link to="/search" className="font-semibold ">
+          Search
+        </Link>
+      </motion.li>
     </motion.ul>
   );
 }

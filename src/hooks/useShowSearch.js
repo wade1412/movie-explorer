@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDebounce } from "./useDebounce";
-import { searchMovies } from "../services/api";
+import { searchShows } from "../services/api";
 
-export const useMoviesSearch = (query, page) => {
-  const [movies, setMovies] = useState([]);
+export const useShowSearch = (showType, query, page) => {
+  const [shows, setShows] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ isError: false, message: "" });
@@ -32,7 +32,7 @@ export const useMoviesSearch = (query, page) => {
     const getMovies = async () => {
       if (!debouncedQuery.trim()) {
         //prevent fetch on empty input, clear error and movies, finish loading
-        setMovies([]);
+        setShows([]);
         setTotalPages(1);
         setError({ isError: false, message: "" });
         return;
@@ -49,15 +49,19 @@ export const useMoviesSearch = (query, page) => {
           include_adult: false,
         });
 
-        const { results, total_pages } = await searchMovies(params, signal);
+        const { results, total_pages } = await searchShows(
+          showType,
+          params,
+          signal,
+        );
 
-        setMovies(results || []);
+        setShows(results || []);
 
         setTotalPages(Math.min(total_pages, 100));
       } catch (err) {
         if (err.name === "AbortError") return;
 
-        setMovies([]);
+        setShows([]);
         setError({
           isError: true,
           message: err.message || "Something went wrong",
@@ -73,17 +77,17 @@ export const useMoviesSearch = (query, page) => {
     return () => {
       controller.abort();
     };
-  }, [debouncedQuery, page]);
+  }, [showType, debouncedQuery, page]);
 
   let status;
   if (!query.trim()) status = "idle";
   else if (isLoading) status = "loading";
   else if (error.isError) status = "error";
-  else if (movies.length === 0) status = "empty";
+  else if (shows.length === 0) status = "empty";
   else status = "success";
 
   return {
-    movies,
+    shows,
     page,
     totalPages,
     status,

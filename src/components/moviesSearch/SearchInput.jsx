@@ -1,6 +1,6 @@
 function SearchInput({ searchQuery, onChange }) {
   return (
-    <div className="flex text-base md:text-lg w-full justify-center">
+    <div className="flex text-base md:text-lg">
       <div className="relative w-full max-w-120">
         <div className="pointer-events-none absolute inset-y-0 inset-s-0 flex items-center ps-3">
           <svg

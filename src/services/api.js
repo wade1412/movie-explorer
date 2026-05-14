@@ -64,8 +64,8 @@ const getShowsByParams = async (
   return apiType === "trending" ? data.results : data;
 };
 
-export const searchMovies = (params, signal) =>
-  getShowsByParams("search", "movie", params, signal);
+export const searchShows = (showType, params, signal) =>
+  getShowsByParams("search", showType, params, signal);
 
 export const getFilteredShows = (showType, params, signal) =>
   getShowsByParams("discover", showType, params, signal);

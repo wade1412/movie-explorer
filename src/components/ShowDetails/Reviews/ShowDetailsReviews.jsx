@@ -66,7 +66,7 @@ function ShowDetailsReviews({ showType, id }) {
               </div>
             </div>
           ) : (
-            <div className="bg-dark-blue-600 flex rounded-xl px-4 py-2 text-lg font-light text-white italic">
+            <div className="bg-dark-blue-600 flex rounded-xl px-4 mx-2 py-2 text-lg font-light text-white italic">
               No reviews yet
             </div>
           )}

@@ -2,12 +2,12 @@
 import { motion } from "motion/react";
 import Trending from "../components/HomePage/TrendingMovies/Trending";
 import HomePageList from "../components/HomePage/HomePageList/HomePageList";
-import MoviesSearch from "../components/MoviesSearch/MoviesSearch";
+import Footer from "../components/Footer";
 
 function HomePage() {
   return (
     <motion.section
-      className=" flex flex-col gap-4 py-2 mx-auto"
+      className="flex flex-col gap-4 py-2 mx-auto"
       initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
@@ -15,7 +15,6 @@ function HomePage() {
       <Trending />
       <HomePageList showType="movie" />
       <HomePageList showType="tv" />
-      <MoviesSearch />
     </motion.section>
   );
 }

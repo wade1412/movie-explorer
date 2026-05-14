@@ -1,15 +1,17 @@
-import { useMoviesSearch } from "../../hooks/useMoviesSearch";
+import { useShowSearch } from "../../hooks/useShowSearch";
 import ShowsList from "../ShowsList/ShowsList";
+import ValueToggle from "../ValueToggle";
 import SearchInput from "./SearchInput";
 
 import { useSearchParams } from "react-router";
 
-function MoviesSearch() {
+function ShowSearch({ showType, toggleShowType }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query") || "";
   const page = Number(searchParams.get("page")) || 1;
 
-  const { movies, totalPages, status, errorMessage } = useMoviesSearch(
+  const { shows, totalPages, status, errorMessage } = useShowSearch(
+    showType,
     query,
     page,
   );
@@ -31,9 +33,19 @@ function MoviesSearch() {
 
   return (
     <>
-      <SearchInput searchQuery={query} onChange={handleQueryChange} />
+      <div className="flex w-full flex-col md:flex-row gap-4 items-stretch justify-center md:items-center md:max-w-2xl md:justify-around">
+        <ValueToggle
+          value={showType}
+          toggleValue={toggleShowType}
+          valueOne="Movie"
+          valueTwo="Tv"
+        />
+
+        <SearchInput searchQuery={query} onChange={handleQueryChange} />
+      </div>
       <ShowsList
-        movies={movies}
+        shows={shows}
+        showType={showType}
         page={page}
         totalPages={totalPages}
         changePageNumber={handlePageChange}
@@ -44,4 +56,4 @@ function MoviesSearch() {
   );
 }
 
-export default MoviesSearch;
+export default ShowSearch;

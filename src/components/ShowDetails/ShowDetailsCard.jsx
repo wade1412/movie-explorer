@@ -66,6 +66,7 @@ function ShowDetailsCard({ show, showType }) {
             <ShowDetailsGenres genres={data.genres} showType={showType} />
           </div>
 
+          {/* Third and Fourth row: Meta Info  */}
           <ShowDetailsMetaInfo showType={showType} data={data} />
         </div>
 
